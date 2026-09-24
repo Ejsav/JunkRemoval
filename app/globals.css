@@ -1,0 +1,251 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Premium Palette ─────────────────────────────────────────
+   Background : warm off-white   (not sterile)
+   Foreground : very deep navy   (authority, weight)
+   Primary    : deep navy        (trust, structure)
+   Accent     : vivid orange     (urgency, conversion)
+   Secondary  : soft warm gray   (section variation)
+   ──────────────────────────────────────────────────────────── */
+:root {
+  --background:           oklch(0.983 0.002 80);
+  --foreground:           oklch(0.105 0.028 262);
+  --card:                 oklch(1.000 0.000 0);
+  --card-foreground:      oklch(0.105 0.028 262);
+  --popover:              oklch(1.000 0.000 0);
+  --popover-foreground:   oklch(0.105 0.028 262);
+  --primary:              oklch(0.212 0.075 258);
+  --primary-foreground:   oklch(1 0 0);
+  --secondary:            oklch(0.955 0.004 78);
+  --secondary-foreground: oklch(0.105 0.028 262);
+  --muted:                oklch(0.940 0.004 78);
+  --muted-foreground:     oklch(0.44 0.018 258);
+  --accent:               oklch(0.628 0.222 34);
+  --accent-foreground:    oklch(1 0 0);
+  --destructive:          oklch(0.545 0.225 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border:               oklch(0.876 0.006 78);
+  --input:                oklch(0.910 0.004 78);
+  --ring:                 oklch(0.212 0.075 258);
+  --success:              oklch(0.525 0.142 145);
+  --warning:              oklch(0.72 0.148 72);
+  --info:                 oklch(0.56 0.118 225);
+  --star:                 oklch(0.78 0.172 82);
+  --chart-1:              oklch(0.212 0.075 258);
+  --chart-2:              oklch(0.32 0.098 258);
+  --chart-3:              oklch(0.628 0.222 34);
+  --chart-4:              oklch(0.628 0.222 34);
+  --chart-5:              oklch(0.78 0.172 82);
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --font-sans:  "DM Sans", "Geist", system-ui, sans-serif;
+  --font-serif: "Playfair Display", "Georgia", serif;
+  --font-mono:  "Geist Mono", "Geist Mono Fallback", monospace;
+  --color-background:           var(--background);
+  --color-foreground:           var(--foreground);
+  --color-card:                 var(--card);
+  --color-card-foreground:      var(--card-foreground);
+  --color-popover:              var(--popover);
+  --color-popover-foreground:   var(--popover-foreground);
+  --color-primary:              var(--primary);
+  --color-primary-foreground:   var(--primary-foreground);
+  --color-secondary:            var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:                var(--muted);
+  --color-muted-foreground:     var(--muted-foreground);
+  --color-accent:               var(--accent);
+  --color-accent-foreground:    var(--accent-foreground);
+  --color-destructive:          var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:               var(--border);
+  --color-input:                var(--input);
+  --color-ring:                 var(--ring);
+  --color-success:              var(--success);
+  --color-warning:              var(--warning);
+  --color-info:                 var(--info);
+  --color-star:                 var(--star);
+  --color-chart-1:              var(--chart-1);
+  --color-chart-2:              var(--chart-2);
+  --color-chart-3:              var(--chart-3);
+  --color-chart-4:              var(--chart-4);
+  --color-chart-5:              var(--chart-5);
+  --radius-sm:  calc(var(--radius) - 4px);
+  --radius-md:  calc(var(--radius) - 2px);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-sidebar:                    var(--sidebar);
+  --color-sidebar-foreground:         var(--sidebar-foreground);
+  --color-sidebar-primary:            var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent:             var(--sidebar-accent);
+  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
+  --color-sidebar-border:             var(--sidebar-border);
+  --color-sidebar-ring:               var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ─── Scroll-reveal ──────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-up   { animation: fadeUp   0.65s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in   { animation: fadeIn   0.5s  ease both; }
+.animate-scale-in  { animation: scaleIn  0.5s  cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Staggered children fade-up */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.04s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.11s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.18s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.32s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.39s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.46s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.53s; }
+
+/* ─── Elevation shadows ──────────────────────────────────── */
+.shadow-xs  { box-shadow: 0 1px 2px rgba(15,23,42,0.05); }
+.card-shadow {
+  box-shadow: 0 1px 3px rgba(15,23,42,0.05),
+              0 4px 12px rgba(15,23,42,0.06);
+}
+.card-shadow-md {
+  box-shadow: 0 2px 5px rgba(15,23,42,0.04),
+              0 10px 32px rgba(15,23,42,0.08);
+}
+.card-shadow-lg {
+  box-shadow: 0 4px 10px rgba(15,23,42,0.05),
+              0 24px 64px rgba(15,23,42,0.11);
+}
+.card-shadow-xl {
+  box-shadow: 0 8px 20px rgba(15,23,42,0.06),
+              0 40px 96px rgba(15,23,42,0.14);
+}
+
+/* ─── Premium button lift ─────────────────────────────────── */
+.btn-lift {
+  transition:
+    transform   0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow  0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    background  0.18s ease,
+    border-color 0.18s ease,
+    opacity     0.18s ease;
+}
+.btn-lift:hover  { transform: translateY(-2px); }
+.btn-lift:active { transform: translateY(0) scale(0.975); }
+
+/* ─── CTA accent glow ─────────────────────────────────────── */
+.cta-glow:hover {
+  box-shadow:
+    0 0 0 3px oklch(0.628 0.222 34 / 0.20),
+    0 8px 32px oklch(0.628 0.222 34 / 0.32);
+}
+
+/* ─── Dark panel inset highlight ─────────────────────────── */
+.dark-panel-glow {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+/* ─── Section overline label ─────────────────────────────── */
+.section-label {
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+}
+
+/* ─── Nav underline hover ────────────────────────────────── */
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background-color: var(--accent);
+  transition: width 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link-underline:hover::after { width: 100%; }
+
+/* ─── Premium section divider ────────────────────────────── */
+.divider-line { @apply border-t border-border; }
+
+/* ─── Subtle noise texture overlay ──────────────────────── */
+.texture-overlay {
+  position: relative;
+}
+.texture-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ─── Horizontal scrolling ticker ───────────────────────── */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 28s linear infinite;
+  will-change: transform;
+}
+
+/* ─── Image aspect ratios ────────────────────────────────── */
+.aspect-hero  { aspect-ratio: 16 / 10; }
+.aspect-card  { aspect-ratio: 4 / 3; }
+.aspect-thumb { aspect-ratio: 3 / 2; }
+
+/* ─── Focus rings ────────────────────────────────────────── */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: calc(var(--radius) - 2px);
+}
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+
+/* ─── Premium section rule: alternating bg rhythm ────────── */
+/* bg-background → bg-secondary → bg-background … handled per-component */

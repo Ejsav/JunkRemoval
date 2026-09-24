@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /get-more-jobs
+Disallow: /admin
+Disallow: /api
+Sitemap: https://demojunkremoval.com/sitemap.xml
