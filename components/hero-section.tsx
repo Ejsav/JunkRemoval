@@ -11,8 +11,8 @@ export function HeroSection() {
     <section data-section="hero" className="relative bg-foreground overflow-hidden">
       <div className="absolute inset-y-0 right-0 w-full lg:w-[58%]">
         <Image src={hero.image} alt={hero.imageAlt} fill priority className="object-cover object-center" sizes="(max-width: 1024px) 100vw, 58vw" />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground via-foreground/85 to-foreground/20 lg:via-foreground/55 lg:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/40 to-transparent lg:hidden" />
+        <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-foreground via-foreground/55 to-transparent" />
+        <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-foreground/85 via-foreground/70 to-foreground/90" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl min-h-[calc(100svh-104px)] lg:min-h-[640px] flex items-center">
