@@ -1,33 +1,45 @@
 import type React from "react"
 
-export function SectionHeading({
-  eyebrow,
-  title,
-  aside,
-  as: Tag = "h2",
-}: {
-  eyebrow: string
-  title: React.ReactNode
-  aside?: React.ReactNode
-  as?: "h1" | "h2"
-}) {
+export function Container({ className = "", children }: { className?: string; children: React.ReactNode }) {
+  return <div className={`mx-auto w-full max-w-[1320px] px-5 lg:px-10 ${className}`}>{children}</div>
+}
+
+/** Section eyebrow: mono index + label, e.g. "02 — Services". */
+export function Eyebrow({ index, children, tone = "light" }: { index?: string; children: React.ReactNode; tone?: "light" | "dark" }) {
   return (
-    <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-10 sm:mb-12 pb-8 sm:pb-10 border-b border-border">
-      <div>
-        <div className="inline-flex items-center gap-2 mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden />
-          <p className="text-[11px] font-black text-accent uppercase tracking-[0.24em]">{eyebrow}</p>
-        </div>
-        <Tag className="text-[2.1rem] sm:text-5xl font-black tracking-tight text-foreground leading-[1.06] text-balance">{title}</Tag>
-      </div>
-      {aside && <div className="text-muted-foreground text-base font-medium max-w-sm leading-snug">{aside}</div>}
-    </div>
+    <p className={`eyebrow flex items-center gap-3 ${tone === "dark" ? "text-mist" : "text-stone"}`}>
+      {index && <span className={tone === "dark" ? "text-accent-soft" : "text-accent"}>{index}</span>}
+      {index && <span className={`h-px w-6 ${tone === "dark" ? "bg-line-dark" : "bg-line"}`} aria-hidden />}
+      {children}
+    </p>
   )
 }
 
-export function SampleBadge({ label = "Sample" }: { label?: string }) {
+export function SectionTitle({
+  as: Tag = "h2",
+  className = "",
+  children,
+}: {
+  as?: "h1" | "h2"
+  className?: string
+  children: React.ReactNode
+}) {
+  return <Tag className={`headline text-[clamp(2.25rem,4.6vw,4rem)] ${className}`}>{children}</Tag>
+}
+
+/** Serif italic emphasis inside headlines. */
+export function Em({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <span className={`serif-em ${className}`}>{children}</span>
+}
+
+export function SampleBadge({ label = "Sample", tone = "light" }: { label?: string; tone?: "light" | "dark" }) {
   return (
-    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-[0.14em] text-muted-foreground bg-muted border border-border px-2 py-0.5 rounded-full">
+    <span
+      className={`eyebrow !text-[9.5px] inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 border ${
+        tone === "dark" ? "border-line-dark text-mist" : "border-line text-stone bg-paper"
+      }`}
+    >
+      <span className="h-1 w-1 rounded-full bg-current opacity-60" aria-hidden />
       {label}
     </span>
   )

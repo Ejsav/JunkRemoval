@@ -104,11 +104,25 @@ export const site = {
     },
   },
 
-  /** Brand colours (any CSS colour). Everything else derives from these. */
+  /**
+   * Brand colours. Keep the accent muted and deep (white text must stay readable on it).
+   * Everything else is a fixed neutral system, so any client's colour looks refined.
+   */
   brand: {
-    primary: "oklch(0.212 0.075 258)",
-    accent: "oklch(0.628 0.222 34)",
-    dark: "oklch(0.105 0.028 262)",
+    accent: "#a95e2f",
+    ink: "#0e0f0e",
+  },
+
+  /** Art-directed imagery in /public/media. Swap these for the client's own photos. */
+  images: {
+    crew: "/media/crew.jpg",
+    crewAlt: "Crew carrying a sofa to a junk removal truck",
+    recycling: "/media/recycling.jpg",
+    recyclingAlt: "Sorted materials at a recycling facility",
+    finished: "/media/finished-room.jpg",
+    finishedAlt: "A clean, empty living room after a cleanout",
+    commercial: "/media/commercial.jpg",
+    commercialAlt: "Office floor being cleared of furniture",
   },
 
   seo: {
@@ -121,10 +135,10 @@ export const site = {
 
   hero: {
     eyebrow: "Same-day pickup available",
-    headline: ["Junk gone today.", "Price locked upfront."],
+    headline: ["Junk gone today.", "Priced before we lift a thing."],
     subhead:
-      "Tell us what needs to go, or text a photo. You get a firm price before we lift a thing, and a crew that leaves the place swept.",
-    image: "/hero-truck.jpg",
+      "Tell us what needs to go, or text a photo. You get a firm price, an arrival window we keep, and a crew that leaves the place swept.",
+    image: "/media/hero.jpg",
     imageAlt: "Junk removal truck in a driveway next to a pile of furniture and boxes",
     bullets: [
       "Firm price before any work starts",
@@ -210,22 +224,22 @@ export const site = {
       title: "Garage Cleanout",
       location: "Winter Park",
       description: "A full two-car garage of stored boxes and old furniture, cleared in one visit.",
-      before: "/garage-before.jpg",
-      after: "/garage-after.jpg",
+      before: "/media/garage-before.jpg",
+      after: "/media/garage-after.jpg",
     },
     {
       title: "Estate Cleanout",
       location: "Lake Nona",
       description: "A four-bedroom home emptied, with keepsakes set aside for the family.",
-      before: "/estate-before.jpg",
-      after: "/estate-after.jpg",
+      before: "/media/estate-before.jpg",
+      after: "/media/estate-after.jpg",
     },
     {
       title: "Office Cleanout",
       location: "Downtown Orlando",
       description: "Desks, chairs and e-waste removed before a new tenant moved in.",
-      before: "/office-before.jpg",
-      after: "/office-after.jpg",
+      before: "/media/office-before.jpg",
+      after: "/media/office-after.jpg",
     },
   ] as Project[],
 

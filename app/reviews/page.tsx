@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function ReviewsPage() {
   return (
     <>
-      <PageHeader eyebrow="Reviews" title="Straight from our customers." />
+      <PageHeader eyebrow="Reviews" title="Straight from" emphasis="our customers." />
       <ReviewsSection />
       <ProjectsSection />
       <CtaSection />

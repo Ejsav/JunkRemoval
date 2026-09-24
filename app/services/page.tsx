@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, Check } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { site, QUOTE_PATH } from "@/config/site"
 import { icons } from "@/lib/icons"
 import { PageHeader } from "@/components/page-header"
 import { ProcessSection } from "@/components/process-section"
 import { CtaSection } from "@/components/cta-section"
+import { Container } from "@/components/section-heading"
 import { JsonLd } from "@/components/json-ld"
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 }
 
 export default function ServicesPage() {
-  const { services, business, seo, serviceAreas } = site
+  const { services, business, seo, serviceAreas, images } = site
   const schema = {
     "@context": "https://schema.org",
     "@graph": services.map((s) => ({
@@ -32,42 +33,57 @@ export default function ServicesPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Services" title={`Junk removal services in ${business.address.city}`} intro={business.description} />
-      <section className="py-16 sm:py-24 bg-background" data-section="services-list">
-        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-5">
-          {services.map((s) => {
+      <PageHeader
+        eyebrow="Services"
+        title="Everything, gone."
+        emphasis={`Across ${business.address.city}.`}
+        intro={business.description}
+        image={images.crew}
+        imageAlt={images.crewAlt}
+      />
+
+      <section className="bg-bone py-20 sm:py-28" data-section="services-list">
+        <Container>
+          {services.map((s, i) => {
             const Icon = icons[s.icon]
             return (
-              <article id={s.slug} key={s.slug} className="scroll-mt-24 bg-card border border-border rounded-2xl p-7 sm:p-10 card-shadow grid lg:grid-cols-[1fr_1fr_auto] gap-8 lg:items-center">
-                <div>
-                  <span className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5" aria-hidden>
-                    <Icon className="h-6 w-6 text-accent" />
-                  </span>
-                  <h2 className="text-2xl font-black text-foreground mb-2">{s.title}</h2>
-                  <p className="text-muted-foreground leading-relaxed">{s.description}</p>
+              <article
+                id={s.slug}
+                key={s.slug}
+                data-reveal
+                className="scroll-mt-28 grid lg:grid-cols-12 gap-x-10 gap-y-6 py-12 sm:py-14 border-t border-line last:border-b"
+              >
+                <div className="lg:col-span-5">
+                  <p className="font-mono text-[12px] text-stone flex items-center gap-3">
+                    {String(i + 1).padStart(2, "0")}
+                    <Icon className="h-4 w-4 text-accent" aria-hidden />
+                  </p>
+                  <h2 className="headline text-[clamp(2rem,3.4vw,3rem)] mt-4">{s.title}</h2>
+                  <p className="text-[16.5px] text-stone leading-relaxed mt-4 max-w-md">{s.description}</p>
                 </div>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <ul className="lg:col-span-4 lg:col-start-7 self-center grid gap-0 border-t border-line lg:border-t-0">
                   {s.examples.map((ex) => (
-                    <li key={ex} className="flex items-center gap-2.5 text-[15px] font-semibold text-foreground">
-                      <Check className="h-4 w-4 text-accent shrink-0" aria-hidden />
+                    <li key={ex} className="flex items-center gap-3 py-3 border-b border-line text-[15px] text-ink">
+                      <span className="h-1 w-1 rounded-full bg-accent" aria-hidden />
                       {ex}
                     </li>
                   ))}
                 </ul>
-                <div className="flex lg:flex-col items-center lg:items-end justify-between gap-4">
+                <div className="lg:col-span-2 self-center flex lg:flex-col items-center lg:items-end justify-between gap-4">
                   {s.priceFrom && (
-                    <p className="text-sm text-muted-foreground">
-                      From <span className="text-2xl font-black text-foreground">${s.priceFrom}</span>
+                    <p className="lg:text-right">
+                      <span className="eyebrow !text-[10px] text-stone block">from</span>
+                      <span className="text-[34px] font-semibold tracking-[-0.04em] leading-none">${s.priceFrom}</span>
                     </p>
                   )}
-                  <Link href={QUOTE_PATH} data-cta={`service-${s.slug}`} className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-black px-6 h-12 rounded-xl hover:bg-primary/90 transition-all text-sm btn-lift whitespace-nowrap">
-                    Get a Quote <ArrowRight className="h-4 w-4" aria-hidden />
+                  <Link href={QUOTE_PATH} data-cta={`service-${s.slug}`} className="btn btn-ink !h-11 !px-5 !text-[14px]">
+                    Quote <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
                   </Link>
                 </div>
               </article>
             )
           })}
-        </div>
+        </Container>
       </section>
       <ProcessSection />
       <CtaSection />

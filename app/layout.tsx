@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { DM_Sans } from "next/font/google"
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google"
 import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
@@ -10,9 +10,12 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { MobileActionBar } from "@/components/mobile-action-bar"
 import { ConversionTracker } from "@/components/conversion-tracker"
+import { RevealObserver } from "@/components/reveal-observer"
 import { JsonLd, localBusinessSchema } from "@/components/json-ld"
 
-const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" })
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" })
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" })
+const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-instrument", display: "swap" })
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.seo.siteUrl),
@@ -36,25 +39,20 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: site.brand.dark,
+  themeColor: site.brand.ink,
 }
 
-const brandVars = {
-  "--primary": site.brand.primary,
-  "--ring": site.brand.primary,
-  "--accent": site.brand.accent,
-  "--foreground": site.brand.dark,
-  "--card-foreground": site.brand.dark,
-  "--popover-foreground": site.brand.dark,
-  "--secondary-foreground": site.brand.dark,
-} as React.CSSProperties
+const brandVars = { "--accent": site.brand.accent, "--ink": site.brand.ink } as React.CSSProperties
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const { ga4Id } = site.analytics
   return (
-    <html lang="en" style={brandVars} className="bg-background">
-      <body className={`${dmSans.variable} font-sans antialiased pb-[72px] lg:pb-0`}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-card focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg">
+    <html lang="en" suppressHydrationWarning style={brandVars} className={`${geist.variable} ${geistMono.variable} ${instrument.variable} bg-background`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body className="font-sans antialiased pb-[76px] lg:pb-0">
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-paper focus:px-4 focus:py-2 focus:rounded-full focus:shadow-lg">
           Skip to content
         </a>
         <DemoBar />
@@ -63,6 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Footer />
         <MobileActionBar />
         <ConversionTracker />
+        <RevealObserver />
         <JsonLd data={localBusinessSchema()} />
         <Analytics />
         {ga4Id && (

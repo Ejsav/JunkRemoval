@@ -1,5 +1,4 @@
 import { HeroSection } from "@/components/hero-section"
-import { PromisesBar } from "@/components/promises-bar"
 import { ServicesSection } from "@/components/services-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { ProcessSection } from "@/components/process-section"
@@ -13,15 +12,14 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <PromisesBar />
-      <ServicesSection />
-      <ProjectsSection />
-      <ProcessSection />
-      <ReviewsSection limit={3} />
-      <PricingSection />
-      <QuoteSection />
-      <ServiceAreasSection />
-      <FaqSection />
+      <ServicesSection n="01" />
+      <ProjectsSection n="02" />
+      <ProcessSection n="03" />
+      <ReviewsSection limit={3} n="04" />
+      <PricingSection n="05" />
+      <QuoteSection n="06" />
+      <ServiceAreasSection n="07" />
+      <FaqSection n="08" />
     </>
   )
 }

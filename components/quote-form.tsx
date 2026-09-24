@@ -168,15 +168,15 @@ export function QuoteForm() {
         <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6 ring-2 ring-success/20">
           <CheckCircle2 className="w-8 h-8 text-success" aria-hidden />
         </div>
-        <h3 className="text-2xl font-black text-foreground mb-2">Request received.</h3>
-        <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
+        <h3 className="text-[26px] font-semibold tracking-[-0.03em] text-ink mb-2">Request received.</h3>
+        <p className="text-stone leading-relaxed max-w-sm mx-auto">
           {mode === "live"
             ? `We'll ${fields.contactPref === "call" ? "call" : fields.contactPref === "email" ? "email" : "text"} you shortly with your price.`
             : `This is a demo, so your request went to ${builder.name}, not a real crew. Everything else works exactly like it will on a live site.`}
         </p>
-        <p className="mt-6 text-sm text-muted-foreground">
+        <p className="mt-6 text-sm text-stone">
           Need it faster?{" "}
-          <a href={phoneHref} className="font-black text-foreground underline underline-offset-4">
+          <a href={phoneHref} className="font-medium text-ink underline underline-offset-4">
             Call {business.phoneDisplay}
           </a>
         </p>
@@ -185,8 +185,8 @@ export function QuoteForm() {
   }
 
   const input =
-    "w-full h-12 rounded-xl border bg-background px-4 text-[16px] text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-2 focus:ring-ring/40 focus:border-ring transition-shadow aria-[invalid=true]:border-destructive aria-[invalid=true]:ring-destructive/20"
-  const label = "block text-xs font-black text-foreground uppercase tracking-[0.08em] mb-2"
+    "w-full h-[52px] rounded-xl border border-line bg-bone/50 px-4 text-[16px] text-ink placeholder:text-stone/60 transition-[border-color,box-shadow,background-color] duration-300 hover:border-stone/40 focus:outline-none focus:bg-paper focus:border-ink focus:ring-4 focus:ring-accent/10 aria-[invalid=true]:border-destructive aria-[invalid=true]:ring-destructive/10"
+  const label = "block text-[13px] font-medium text-ink mb-2"
   const err = (k: keyof Fields) =>
     errors[k] && (
       <p id={`${id}-${k}-err`} className="mt-1.5 text-sm text-destructive font-medium">
@@ -224,7 +224,7 @@ export function QuoteForm() {
         </div>
         <div>
           <label htmlFor={`${id}-service`} className={label}>What needs to go?</label>
-          <select {...a11y("service")} className={`${input} appearance-none bg-[length:16px] bg-[right_1rem_center] bg-no-repeat`} value={fields.service} onChange={(e) => set("service", e.target.value)}>
+          <select {...a11y("service")} className={`${input} appearance-none select-chevron`} value={fields.service} onChange={(e) => set("service", e.target.value)}>
             <option value="">Not sure / a mix</option>
             {services.map((s) => (
               <option key={s.slug} value={s.slug}>{s.title}</option>
@@ -247,16 +247,16 @@ export function QuoteForm() {
 
       {forms.photoUploads && (
         <div>
-          <p className={label}>Photos <span className="normal-case tracking-normal font-semibold text-muted-foreground">(optional, fastest way to a firm price)</span></p>
+          <p className={label}>Photos <span className="font-normal text-stone">(optional, fastest way to a firm price)</span></p>
           <div className="flex flex-wrap gap-3">
             {photos.map((p, i) => (
-              <div key={p.url} className="relative h-20 w-20 rounded-xl overflow-hidden border border-border bg-muted">
+              <div key={p.url} className="relative h-20 w-20 rounded-xl overflow-hidden ring-1 ring-line bg-sand">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.url} alt={`Photo ${i + 1}`} className="h-full w-full object-cover" />
                 <button
                   type="button"
                   onClick={() => removePhoto(i)}
-                  className="absolute top-1 right-1 h-6 w-6 rounded-full bg-foreground/80 text-background flex items-center justify-center"
+                  className="absolute top-1 right-1 h-6 w-6 rounded-full bg-ink/80 text-bone backdrop-blur flex items-center justify-center"
                   aria-label={`Remove photo ${i + 1}`}
                   disabled={busy}
                 >
@@ -265,24 +265,24 @@ export function QuoteForm() {
               </div>
             ))}
             {photos.length < forms.maxPhotos && (
-              <label className="h-20 w-20 rounded-xl border-2 border-dashed border-border hover:border-accent/60 hover:bg-accent/5 flex flex-col items-center justify-center gap-1 cursor-pointer text-muted-foreground transition-colors focus-within:ring-2 focus-within:ring-ring/40">
+              <label className="h-20 w-20 rounded-xl border border-dashed border-stone/40 bg-bone/50 hover:border-ink hover:bg-paper flex flex-col items-center justify-center gap-1 cursor-pointer text-stone transition-colors focus-within:ring-2 focus-within:ring-ring/40">
                 <Camera className="h-5 w-5" aria-hidden />
-                <span className="text-[11px] font-bold">Add</span>
+                <span className="text-[11px] font-medium">Add</span>
                 <input ref={fileInput} type="file" accept="image/*" multiple className="sr-only" onChange={(e) => addPhotos(e.target.files)} disabled={busy} />
               </label>
             )}
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">Up to {forms.maxPhotos} photos. Wide shots of the whole pile work best.</p>
+          <p className="mt-2 text-xs text-stone">Up to {forms.maxPhotos} photos. Wide shots of the whole pile work best.</p>
         </div>
       )}
 
       <fieldset>
         <legend className={label}>Best way to reach you</legend>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-1 p-1 rounded-full bg-bone/70 border border-line">
           {(["text", "call", "email"] as const).map((pref) => (
             <label
               key={pref}
-              className="h-11 rounded-xl border border-border flex items-center justify-center font-bold text-sm capitalize cursor-pointer has-[:checked]:bg-foreground has-[:checked]:text-background has-[:checked]:border-foreground has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring/40 transition-colors"
+              className="h-11 rounded-full flex items-center justify-center text-[14px] font-medium capitalize cursor-pointer text-stone transition-colors duration-300 hover:text-ink has-[:checked]:bg-ink has-[:checked]:text-bone has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent/40"
             >
               <input type="radio" name="contactPref" value={pref} checked={fields.contactPref === pref} onChange={() => set("contactPref", pref)} className="sr-only" />
               {pref}
@@ -298,31 +298,31 @@ export function QuoteForm() {
           {err("email")}
         </div>
       ) : (
-        <button type="button" onClick={() => setShowEmail(true)} className="self-start text-sm font-bold text-muted-foreground hover:text-foreground underline underline-offset-4 -mt-2">
+        <button type="button" onClick={() => setShowEmail(true)} className="self-start text-[13.5px] text-stone hover:text-ink link-draw -mt-1">
           + Add an email (optional)
         </button>
       )}
 
       {status === "error" && (
-        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 flex gap-3">
+        <div role="alert" className="rounded-2xl border border-destructive/25 bg-destructive/[0.04] p-4 flex gap-3">
           <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" aria-hidden />
           <div className="text-sm">
-            <p className="font-bold text-foreground mb-2">{errorMsg}</p>
+            <p className="font-medium text-ink mb-2">{errorMsg}</p>
             <div className="flex flex-wrap gap-3">
               {uploadFailed && (
                 <button
                   type="button"
                   onClick={() => void send(true)}
-                  className="font-black text-foreground underline underline-offset-4"
+                  className="font-medium text-ink underline underline-offset-4"
                 >
                   Send without photos
                 </button>
               )}
-              <a href={phoneHref} className="inline-flex items-center gap-1 font-black text-foreground underline underline-offset-4">
+              <a href={phoneHref} className="inline-flex items-center gap-1 font-medium text-ink underline underline-offset-4">
                 <Phone className="h-3.5 w-3.5" aria-hidden /> Call
               </a>
               {business.textEnabled && (
-                <a href={smsHref} className="inline-flex items-center gap-1 font-black text-foreground underline underline-offset-4">
+                <a href={smsHref} className="inline-flex items-center gap-1 font-medium text-ink underline underline-offset-4">
                   <MessageSquare className="h-3.5 w-3.5" aria-hidden /> Text photos
                 </a>
               )}
@@ -334,7 +334,7 @@ export function QuoteForm() {
       <button
         type="submit"
         disabled={busy}
-        className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground font-black text-base h-14 rounded-xl shadow-lg shadow-accent/25 hover:bg-accent/90 active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-wait"
+        className="btn btn-accent w-full !h-14 !text-[16px] mt-1 disabled:opacity-70 disabled:cursor-wait"
       >
         {busy ? (
           <>
@@ -344,11 +344,11 @@ export function QuoteForm() {
         ) : (
           <>
             {photos.length ? "Get My Photo Estimate" : "Get My Free Quote"}
-            <ArrowRight className="h-5 w-5" aria-hidden />
+            <ArrowRight className="btn-arrow h-5 w-5" aria-hidden />
           </>
         )}
       </button>
-      <p className="text-xs text-center text-muted-foreground leading-snug -mt-1">
+      <p className="text-[12.5px] text-center text-stone leading-snug -mt-1">
         No obligation. Your details are only used to quote and schedule your job.
       </p>
     </form>

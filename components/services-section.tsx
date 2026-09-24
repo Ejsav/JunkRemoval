@@ -1,48 +1,49 @@
+import type React from "react"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { site, QUOTE_PATH } from "@/config/site"
-import { icons } from "@/lib/icons"
-import { SectionHeading } from "@/components/section-heading"
+import { Container, Em, Eyebrow, SectionTitle } from "@/components/section-heading"
 
-export function ServicesSection() {
+export function ServicesSection({ n }: { n?: string } = {}) {
   return (
-    <section id="services" data-section="services" className="py-20 sm:py-28 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <SectionHeading eyebrow="What we remove" title="If it needs to go, we take it." aside="Single items to full-property cleanouts, residential and commercial." />
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border/70 rounded-2xl overflow-hidden card-shadow">
-          {site.services.map((s) => {
-            const Icon = icons[s.icon]
-            return (
-              <Link
-                key={s.slug}
-                href={`/services#${s.slug}`}
-                className="group bg-card p-5 sm:p-8 hover:bg-primary transition-colors duration-200 grid grid-cols-[auto_1fr] sm:flex sm:flex-col items-start sm:items-stretch gap-x-4"
-              >
-                <span className="w-11 h-11 rounded-xl bg-accent/10 group-hover:bg-primary-foreground/15 border border-accent/20 group-hover:border-primary-foreground/20 flex items-center justify-center sm:mb-5 transition-colors" aria-hidden>
-                  <Icon className="h-5 w-5 text-accent group-hover:text-primary-foreground transition-colors" />
-                </span>
-                <span className="sm:flex-1 min-w-0">
-                  <h3 className="font-black text-[16px] sm:text-[17px] text-foreground group-hover:text-primary-foreground sm:mb-2 transition-colors">{s.title}</h3>
-                  <p className="text-[13px] sm:text-sm text-muted-foreground group-hover:text-primary-foreground/80 leading-snug sm:leading-relaxed font-medium transition-colors">{s.summary}</p>
-                </span>
-                <span className="col-start-2 mt-2 sm:mt-5 flex items-center sm:justify-between gap-2 text-sm font-black whitespace-nowrap text-foreground group-hover:text-primary-foreground transition-colors">
-                  {s.priceFrom ? `From $${s.priceFrom}` : "Get a price"}
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden />
-                </span>
-              </Link>
-            )
-          })}
-        </div>
-
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-border">
-          <p className="text-muted-foreground font-medium">Not sure if we take it? Send a photo and ask.</p>
-          <Link href={QUOTE_PATH} data-cta="services" className="inline-flex items-center gap-2 text-foreground font-black hover:text-accent transition-colors group">
-            Get a free estimate
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden />
+    <section id="services" data-section="services" className="bg-bone py-24 sm:py-32">
+      <Container className="grid lg:grid-cols-12 gap-12 lg:gap-10">
+        <div className="lg:col-span-4 lg:sticky lg:top-28 self-start" data-reveal>
+          <Eyebrow index={n}>Services</Eyebrow>
+          <SectionTitle className="mt-6">
+            If it needs to go, <Em>we take it.</Em>
+          </SectionTitle>
+          <p className="lede text-stone mt-6 max-w-sm">Single items to full-property cleanouts, for homes and businesses. Every price is locked before we start.</p>
+          <Link href={QUOTE_PATH} data-cta="services" className="btn btn-ink mt-9">
+            Price my job
+            <ArrowUpRight className="btn-arrow h-4 w-4" aria-hidden />
           </Link>
         </div>
-      </div>
+
+        <ul className="lg:col-span-8 border-t border-line">
+          {site.services.map((s, i) => (
+            <li key={s.slug} data-reveal style={{ "--d": `${i * 60}ms` } as React.CSSProperties}>
+              <Link
+                href={`/services#${s.slug}`}
+                className="group grid grid-cols-[2.25rem_1fr_auto] sm:grid-cols-[3.5rem_1fr_auto_auto] items-center gap-x-4 sm:gap-x-6 py-6 sm:py-7 border-b border-line transition-colors duration-500 hover:bg-paper -mx-5 px-5 sm:mx-0 sm:px-3"
+              >
+                <span className="font-mono text-[12px] text-stone self-start sm:self-center pt-1 sm:pt-0">{String(i + 1).padStart(2, "0")}</span>
+                <span className="min-w-0">
+                  <span className="block text-[21px] sm:text-[26px] font-semibold tracking-[-0.03em] text-ink transition-transform duration-500 group-hover:translate-x-1">
+                    {s.title}
+                  </span>
+                  <span className="block text-[14.5px] text-stone mt-1 leading-snug">{s.summary}</span>
+                  {s.priceFrom && <span className="sm:hidden block font-mono text-[12px] text-ink mt-2.5">from ${s.priceFrom}</span>}
+                </span>
+                {s.priceFrom && <span className="hidden sm:block font-mono text-[13px] text-ink whitespace-nowrap">from ${s.priceFrom}</span>}
+                <span className="h-10 w-10 sm:h-11 sm:w-11 rounded-full border border-line flex items-center justify-center text-ink transition-all duration-500 group-hover:bg-ink group-hover:text-bone group-hover:border-ink group-hover:rotate-45">
+                  <ArrowUpRight className="h-4 w-4" aria-hidden />
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Container>
     </section>
   )
 }
