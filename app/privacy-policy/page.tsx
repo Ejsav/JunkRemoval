@@ -1,90 +1,37 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { site, phoneHref } from "@/config/site"
+import { PageHeader } from "@/components/page-header"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Orlando Junk Removal",
-  description:
-    "Learn how we collect, use, and protect your personal information when using our junk removal services.",
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy-policy" },
 }
 
-export default function PrivacyPolicyPage() {
+export default function PrivacyPage() {
+  const { business } = site
   return (
-    <main className="min-h-screen bg-background">
-      {/* Header */}
-      <section className="bg-card py-16 px-4 border-b border-border">
-        <div className="container mx-auto max-w-4xl">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Link>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground font-[family-name:var(--font-playfair)] mb-4">
-            Privacy Policy
-          </h1>
-          <p className="text-muted-foreground">Last updated: March 2026</p>
-        </div>
-      </section>
-
-      {/* Content */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="space-y-8 text-muted-foreground">
-            <div>
-              <p className="leading-relaxed">
-                We collect basic information such as your name, phone number, and job details when you request a quote or contact us through the website.
-              </p>
-            </div>
-
-            <div>
-              <p className="leading-relaxed">
-                This information is used only to respond to your request, provide pricing, and schedule services.
-              </p>
-            </div>
-
-            <div>
-              <p className="leading-relaxed">
-                We do not sell or share your personal information with third parties for marketing purposes.
-              </p>
-            </div>
-
-            <div>
-              <p className="leading-relaxed">
-                Our website may use third-party services such as Google Maps and hosting providers to operate properly.
-              </p>
-            </div>
-
-            <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
-              <p className="leading-relaxed">
-                If you have any questions about your data, contact us at <a href="tel:4078017886" className="font-black text-primary hover:underline">(407) 801-7886</a>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Navigation */}
-      <section className="py-12 px-4 border-t border-border">
-        <div className="container mx-auto max-w-4xl">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/terms-of-service"
-              className="text-center text-sm text-primary hover:underline font-medium"
-            >
-              Terms of Service
-            </Link>
-            <span className="text-muted-foreground/30 hidden sm:block">•</span>
-            <Link
-              href="/disclaimer"
-              className="text-center text-sm text-primary hover:underline font-medium"
-            >
-              Disclaimer
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
+    <>
+      <PageHeader eyebrow="Legal" title="Privacy Policy" />
+      <article className="container mx-auto max-w-3xl px-4 sm:px-6 py-14 sm:py-20 space-y-6 text-muted-foreground leading-relaxed">
+        <p>This policy explains what {business.name} collects when you use this website and how it is used.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">What we collect</h2>
+        <p>When you request a quote we collect your name, phone number, optional email, location, job details and any photos you upload. We also collect anonymous usage data, such as pages visited and buttons clicked, to understand how the site is used.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">How we use it</h2>
+        <p>Your details are used only to contact you about your quote and to schedule and complete your job. We do not sell or rent your information.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">Service providers</h2>
+        <p>Quote requests are delivered through a form service, photos are stored with our hosting provider, and site analytics are processed by analytics providers. These providers process data on our behalf only.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">Your choices</h2>
+        <p>
+          To see, correct or delete information you have sent us, contact us at{" "}
+          <a href={phoneHref} className="font-bold text-foreground underline underline-offset-4">{business.phoneDisplay}</a>
+          {business.email && (
+            <>
+              {" "}or <a href={`mailto:${business.email}`} className="font-bold text-foreground underline underline-offset-4">{business.email}</a>
+            </>
+          )}
+          .
+        </p>
+      </article>
+    </>
   )
 }

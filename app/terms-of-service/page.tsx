@@ -1,90 +1,30 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { site, phoneHref } from "@/config/site"
+import { PageHeader } from "@/components/page-header"
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Orlando Junk Removal",
-  description:
-    "Terms and conditions for using our junk removal services.",
+  title: "Terms of Service",
+  alternates: { canonical: "/terms-of-service" },
 }
 
-export default function TermsOfServicePage() {
+export default function TermsPage() {
+  const { business } = site
   return (
-    <main className="min-h-screen bg-background">
-      {/* Header */}
-      <section className="bg-card py-16 px-4 border-b border-border">
-        <div className="container mx-auto max-w-4xl">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Link>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground font-[family-name:var(--font-playfair)] mb-4">
-            Terms of Service
-          </h1>
-          <p className="text-muted-foreground">Last updated: March 2026</p>
-        </div>
-      </section>
-
-      {/* Content */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <div className="space-y-8 text-muted-foreground">
-            <div>
-              <p className="leading-relaxed">
-                By using this website or requesting a quote, you agree that all pricing is subject to confirmation based on the scope of work.
-              </p>
-            </div>
-
-            <div>
-              <p className="leading-relaxed">
-                Final pricing is agreed upon before work begins.
-              </p>
-            </div>
-
-            <div>
-              <p className="leading-relaxed">
-                We are not responsible for delays caused by weather, access issues, or unforeseen circumstances.
-              </p>
-            </div>
-
-            <div>
-              <p className="leading-relaxed">
-                All services are provided as described at the time of booking.
-              </p>
-            </div>
-
-            <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
-              <p className="leading-relaxed">
-                If you have questions, contact us directly at <a href="tel:4078017886" className="font-black text-primary hover:underline">(407) 801-7886</a>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Navigation */}
-      <section className="py-12 px-4 border-t border-border">
-        <div className="container mx-auto max-w-4xl">
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/privacy-policy"
-              className="text-center text-sm text-primary hover:underline font-medium"
-            >
-              Privacy Policy
-            </Link>
-            <span className="text-muted-foreground/30 hidden sm:block">•</span>
-            <Link
-              href="/disclaimer"
-              className="text-center text-sm text-primary hover:underline font-medium"
-            >
-              Disclaimer
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
+    <>
+      <PageHeader eyebrow="Legal" title="Terms of Service" />
+      <article className="container mx-auto max-w-3xl px-4 sm:px-6 py-14 sm:py-20 space-y-6 text-muted-foreground leading-relaxed">
+        <p>By using this website or booking with {business.name}, you agree to these terms.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">Quotes and pricing</h2>
+        <p>Prices shown on this site are guides. Your firm price is confirmed before work begins, based on the items and volume removed. If the job differs materially from what was described, we will agree a revised price with you before continuing.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">Items we can&apos;t take</h2>
+        <p>We do not remove hazardous materials, including paint, chemicals, fuel, asbestos or medical waste.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">Scheduling</h2>
+        <p>Arrival windows are estimates. We will contact you if we are running late. Same-day service depends on availability.</p>
+        <h2 className="text-xl font-black text-foreground pt-4">Questions</h2>
+        <p>
+          Call <a href={phoneHref} className="font-bold text-foreground underline underline-offset-4">{business.phoneDisplay}</a> with any questions about these terms.
+        </p>
+      </article>
+    </>
   )
 }

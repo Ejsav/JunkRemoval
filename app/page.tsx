@@ -1,45 +1,27 @@
 import { HeroSection } from "@/components/hero-section"
-import { PainSection } from "@/components/pain-section"
-import { PositioningSection } from "@/components/positioning-section"
-import { ActiveBookings } from "@/components/active-bookings"
-import { TrustBar } from "@/components/trust-bar"
-import { OfferStackSection } from "@/components/offer-stack-section"
+import { PromisesBar } from "@/components/promises-bar"
 import { ServicesSection } from "@/components/services-section"
-import { BeforeAfterSection } from "@/components/before-after-section"
-import { WhyChooseUsSection } from "@/components/why-choose-us-section"
+import { ProjectsSection } from "@/components/projects-section"
 import { ProcessSection } from "@/components/process-section"
-import { ValueCostSection } from "@/components/value-cost-section"
-import { TransparentPricingSection } from "@/components/transparent-pricing-section"
-import { PricingPreviewSection } from "@/components/pricing-preview-section"
+import { PricingSection } from "@/components/pricing-section"
 import { ReviewsSection } from "@/components/reviews-section"
-import { GuaranteeSection } from "@/components/guarantee-section"
-import { ServiceArea } from "@/components/service-area"
-import { ContactForm } from "@/components/contact-form"
-import { FinalCTA } from "@/components/final-cta"
-import { Footer } from "@/components/footer"
+import { ServiceAreasSection } from "@/components/service-areas-section"
+import { QuoteSection } from "@/components/quote-section"
+import { FaqSection } from "@/components/faq-section"
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <main>
+    <>
       <HeroSection />
-      <PainSection />
-      <PositioningSection />
-      <ActiveBookings />
-      <TrustBar />
-      <OfferStackSection />
+      <PromisesBar />
       <ServicesSection />
-      <BeforeAfterSection />
-      <WhyChooseUsSection />
+      <ProjectsSection />
       <ProcessSection />
-      <ValueCostSection />
-      <TransparentPricingSection />
-      <PricingPreviewSection />
-      <ReviewsSection />
-      <GuaranteeSection />
-      <ServiceArea />
-      <ContactForm />
-      <FinalCTA />
-      <Footer />
-    </main>
+      <ReviewsSection limit={3} />
+      <PricingSection />
+      <QuoteSection />
+      <ServiceAreasSection />
+      <FaqSection />
+    </>
   )
 }
