@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ServiceAreasPage() {
   return (
     <>
-      <PageHeader eyebrow="Service areas" title="Where we work." emphasis={`${site.business.address.city} and nearby.`} intro={site.serviceAreas.intro} image={site.images.commercial} imageAlt={site.images.commercialAlt} />
+      <PageHeader eyebrow="Service areas" title="Where we work." emphasis={`${site.business.address.city} and nearby.`} image={site.images.commercial} imageAlt={site.images.commercialAlt} />
       <ServiceAreasSection />
       <CtaSection />
     </>

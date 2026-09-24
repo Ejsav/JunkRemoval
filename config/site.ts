@@ -59,8 +59,8 @@ export const site = {
   builder: {
     name: "Eric Jokl",
     email: "hello@ericjokl.com",
-    phoneDisplay: "(407) 801-7886",
-    phoneE164: "+14078017886",
+    phoneDisplay: "(860) 406-0262",
+    phoneE164: "+18604060262",
     offerPrice: 750,
   },
 

@@ -62,7 +62,7 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
         </div>
 
         <div className="grid lg:grid-cols-12 gap-5">
-          <figure className={`${limit ? "lg:col-span-7" : "lg:col-span-12"} bg-ink text-bone rounded-[28px] p-8 sm:p-12 flex flex-col justify-between min-h-[22rem] relative overflow-hidden grain`} data-reveal>
+          <figure className={`lg:col-span-7 bg-ink text-bone rounded-[28px] p-8 sm:p-12 flex flex-col justify-between min-h-[22rem] relative overflow-hidden grain`} data-reveal>
             <span className="absolute top-2 right-8 serif-em text-[11rem] leading-[0.8] text-bone/[0.06] select-none" aria-hidden>
               &ldquo;
             </span>
@@ -84,8 +84,8 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
             </figcaption>
           </figure>
 
-          <div className={`grid gap-5 ${limit ? "lg:col-span-5" : "lg:col-span-12 sm:grid-cols-2 lg:grid-cols-3"}`}>
-            {rest.map((r, i) => (
+          <div className={`grid gap-5 ${limit ? "lg:col-span-5" : "lg:col-span-5 lg:grid-rows-1"}`}>
+            {(limit ? rest : rest.slice(0, 1)).map((r, i) => (
               <figure
                 key={r.name + i}
                 data-reveal
@@ -106,6 +106,30 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
             ))}
           </div>
         </div>
+
+        {!limit && rest.length > 1 && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+            {rest.slice(1).map((r, i) => (
+              <figure
+                key={r.name + i}
+                data-reveal
+                style={{ "--d": `${(i + 1) * 70}ms` } as React.CSSProperties}
+                className="bg-paper rounded-[24px] p-7 border border-line elevated flex flex-col justify-between gap-6"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <Stars rating={r.rating} />
+                    {isSampleContent && <SampleBadge />}
+                  </div>
+                  <blockquote className="text-[15.5px] text-ink leading-relaxed mt-4">&ldquo;{r.text}&rdquo;</blockquote>
+                </div>
+                <figcaption>
+                  <Byline r={r} />
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
 
         {limit && site.reviews.length > limit && (
           <Link href="/reviews" className="inline-flex items-center gap-2 mt-10 text-[15px] font-medium text-ink link-draw">

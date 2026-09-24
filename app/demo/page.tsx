@@ -5,6 +5,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowRight, Mail, MessageSquare, Phone } from "lucide-react"
 import { site, isLive } from "@/config/site"
+import { BrandTryOn } from "@/components/brand-tryon"
 import { Container, Em, Eyebrow } from "@/components/section-heading"
 
 export const metadata: Metadata = {
@@ -87,10 +88,27 @@ export default function DemoPage() {
         </Container>
       </section>
 
+      <section className="bg-sand py-20 sm:py-28" id="colours">
+        <Container className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
+          <div className="lg:col-span-4" data-reveal>
+            <Eyebrow index="02">Your brand</Eyebrow>
+            <h2 className="headline text-[clamp(2rem,4vw,3.4rem)] mt-6">
+              See it in <Em>your colours.</Em>
+            </h2>
+            <p className="text-[15.5px] text-stone leading-relaxed mt-5 max-w-sm">
+              Pick a colour and browse the site. Your logo, photos and reviews go in the same way.
+            </p>
+          </div>
+          <div className="lg:col-span-8" data-reveal>
+            <BrandTryOn />
+          </div>
+        </Container>
+      </section>
+
       <section className="bg-paper py-20 sm:py-28 border-t border-line">
         <Container className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
           <div className="lg:col-span-6">
-            <Eyebrow index="02">How it works</Eyebrow>
+            <Eyebrow index="03">How it works</Eyebrow>
             <ol className="mt-10 border-t border-line">
               {steps.map(([title, text], i) => (
                 <li key={title} data-reveal className="grid grid-cols-[3rem_1fr] gap-4 py-7 border-b border-line">

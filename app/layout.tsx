@@ -30,9 +30,8 @@ export const metadata: Metadata = {
     title: site.seo.title,
     description: site.seo.description,
     url: "/",
-    images: [{ url: site.seo.ogImage, width: 1200, height: 630, alt: site.business.name }],
   },
-  twitter: { card: "summary_large_image", title: site.seo.title, description: site.seo.description, images: [site.seo.ogImage] },
+  twitter: { card: "summary_large_image", title: site.seo.title, description: site.seo.description },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 }
 
@@ -49,7 +48,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning style={brandVars} className={`${geist.variable} ${geistMono.variable} ${instrument.variable} bg-background`}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js');${
+              isLive ? "" : "try{var a=localStorage.getItem('demo-accent');if(a)document.documentElement.style.setProperty('--accent',a)}catch(e){}"
+            }`,
+          }}
+        />
       </head>
       <body className="font-sans antialiased pb-[76px] lg:pb-0">
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-paper focus:px-4 focus:py-2 focus:rounded-full focus:shadow-lg">

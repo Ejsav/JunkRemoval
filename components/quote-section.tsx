@@ -56,7 +56,7 @@ export function QuoteSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: string })
               </div>
               <span className="eyebrow !text-[10px] text-stone border border-line rounded-full px-3 py-1.5 shrink-0">Free</span>
             </div>
-            <QuoteForm />
+            <QuoteForm uploads={site.forms.photoUploads && Boolean(process.env.BLOB_READ_WRITE_TOKEN)} />
           </div>
         </div>
       </Container>

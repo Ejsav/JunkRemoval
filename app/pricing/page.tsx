@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <>
-      <PageHeader eyebrow="Pricing" title="Simple pricing." emphasis="Locked before we start." intro={site.pricing.intro} />
+      <PageHeader eyebrow="Pricing" title="Simple pricing." emphasis="Locked before we start." />
       <PricingSection />
       <FaqSection />
       <CtaSection title="Want your exact price?" emphasis="Send a photo." />

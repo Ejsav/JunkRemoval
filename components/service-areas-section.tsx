@@ -5,7 +5,7 @@ import { Container, Em, Eyebrow, SectionTitle } from "@/components/section-headi
 
 export function ServiceAreasSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: string }) {
   const { serviceAreas, business } = site
-  const [home, ...rest] = serviceAreas.cities
+  const { cities } = serviceAreas
 
   return (
     <section id="service-areas" data-section="service-areas" className="bg-bone py-24 sm:py-32 relative overflow-hidden">
@@ -28,15 +28,13 @@ export function ServiceAreasSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: st
 
         <div className="lg:col-span-8 lg:pl-10">
           <p className="headline !leading-[1.22] text-[clamp(1.75rem,3.4vw,3rem)] text-ink" data-reveal>
-            <span className="inline-flex items-center gap-3 whitespace-nowrap">
-              <span className="h-3 w-3 rounded-full bg-accent ring-4 ring-accent/15" aria-hidden />
-              {home}
-            </span>
-            {rest.map((city, i) => (
+            {cities.map((city, i) => (
               <span key={city}>
-                {" "}
-                <span className="text-line mx-1.5 sm:mx-2.5 font-light" aria-hidden>/</span>{" "}
-                <span className="whitespace-nowrap text-stone/75 hover:text-ink transition-colors duration-300">{city}</span>
+                <span className={`whitespace-nowrap ${i === 0 ? "inline-flex items-center gap-3" : "text-stone/75 hover:text-ink transition-colors duration-300"}`}>
+                  {i === 0 && <span className="h-3 w-3 rounded-full bg-accent ring-4 ring-accent/15" aria-hidden />}
+                  {city}
+                  {i < cities.length - 1 && <span className="text-line font-light ml-2 sm:ml-3" aria-hidden>/</span>}
+                </span>{" "}
               </span>
             ))}
           </p>

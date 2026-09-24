@@ -49,7 +49,7 @@ async function shrink(file: File): Promise<File> {
   }
 }
 
-export function QuoteForm() {
+export function QuoteForm({ uploads }: { uploads: boolean }) {
   const id = useId()
   const [fields, setFields] = useState<Fields>(empty)
   const [errors, setErrors] = useState<Errors>({})
@@ -245,7 +245,13 @@ export function QuoteForm() {
         />
       </div>
 
-      {forms.photoUploads && (
+      {!uploads && business.textEnabled && (
+        <p className="text-[14px] text-stone -mt-1">
+          Have photos?{" "}
+          <a href={smsHref} className="text-ink font-medium link-draw">Text them to {business.phoneDisplay}</a> for the fastest price.
+        </p>
+      )}
+      {uploads && (
         <div>
           <p className={label}>Photos <span className="font-normal text-stone">(optional, fastest way to a firm price)</span></p>
           <div className="flex flex-wrap gap-3">
