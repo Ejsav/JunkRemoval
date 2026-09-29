@@ -6,7 +6,7 @@ import { CtaSection } from "@/components/cta-section"
 
 export const metadata: Metadata = {
   title: "Service Areas",
-  description: `Junk removal in ${site.serviceAreas.cities.slice(0, 6).join(", ")} and nearby. Same-day pickup often available.`,
+  description: `Junk removal in ${site.serviceAreas.cities.slice(0, 6).map((c) => c.name).join(", ")} and nearby. Same-day pickup often available.`,
   alternates: { canonical: "/service-areas" },
 }
 

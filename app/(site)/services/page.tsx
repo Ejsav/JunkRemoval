@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { site, QUOTE_PATH } from "@/config/site"
+import { site, quoteHref, servicePath } from "@/config/site"
 import { icons } from "@/lib/icons"
 import { PageHeader } from "@/components/page-header"
 import { ProcessSection } from "@/components/process-section"
@@ -25,8 +25,8 @@ export default function ServicesPage() {
       description: s.description,
       serviceType: "Junk removal",
       provider: { "@id": `${seo.siteUrl}/#business` },
-      areaServed: serviceAreas.cities.map((name) => ({ "@type": "City", name })),
-      url: `${seo.siteUrl}/services#${s.slug}`,
+      areaServed: serviceAreas.cities.map((c) => ({ "@type": "City", name: c.name })),
+      url: `${seo.siteUrl}${servicePath(s.slug)}`,
       ...(s.priceFrom && { offers: { "@type": "Offer", priceCurrency: "USD", price: s.priceFrom, description: `From $${s.priceFrom}` } }),
     })),
   }
@@ -58,7 +58,9 @@ export default function ServicesPage() {
                     {String(i + 1).padStart(2, "0")}
                     <Icon className="h-4 w-4 text-accent" aria-hidden />
                   </p>
-                  <h2 className="headline text-[clamp(2rem,3.4vw,3rem)] mt-4">{s.title}</h2>
+                  <h2 className="headline text-[clamp(2rem,3.4vw,3rem)] mt-4">
+                    <Link href={servicePath(s.slug)} className="hover:text-accent transition-colors">{s.title}</Link>
+                  </h2>
                   <p className="text-[16.5px] text-stone leading-relaxed mt-4 max-w-md">{s.description}</p>
                 </div>
                 <ul className="lg:col-span-4 lg:col-start-7 self-center grid gap-0 border-t border-line lg:border-t-0">
@@ -76,9 +78,14 @@ export default function ServicesPage() {
                       <span className="text-[34px] font-semibold tracking-[-0.04em] leading-none">${s.priceFrom}</span>
                     </p>
                   )}
-                  <Link href={QUOTE_PATH} data-cta={`service-${s.slug}`} className="btn btn-ink !h-11 !px-5 !text-[14px]">
-                    Quote <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
-                  </Link>
+                  <div className="flex lg:flex-col items-center lg:items-end gap-4">
+                    <Link href={servicePath(s.slug)} className="text-[14px] font-medium link-draw whitespace-nowrap">
+                      Details
+                    </Link>
+                    <Link href={quoteHref({ service: s.slug })} data-cta={`service-${s.slug}`} className="btn btn-ink !h-11 !px-5 !text-[14px]">
+                      Price it <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
+                    </Link>
+                  </div>
                 </div>
               </article>
             )

@@ -1,10 +1,19 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, MessageSquare, Phone } from "lucide-react"
-import { site, phoneHref, smsHref, QUOTE_PATH } from "@/config/site"
+import { site, QUOTE_PATH } from "@/config/site"
+import { BizPhone, CallLink, TextLink } from "@/components/biz"
 import { Container, Em } from "@/components/section-heading"
 
-export function CtaSection({ title = "Ready when you are.", emphasis = "Same-day slots go early." }: { title?: string; emphasis?: string }) {
+export function CtaSection({
+  title = "Ready when you are.",
+  emphasis = "Same-day slots go early.",
+  href = QUOTE_PATH,
+}: {
+  title?: string
+  emphasis?: string
+  href?: string
+}) {
   const { business, images } = site
   return (
     <section data-section="final-cta" className="bg-bone py-16 sm:py-24">
@@ -17,20 +26,21 @@ export function CtaSection({ title = "Ready when you are.", emphasis = "Same-day
               {title} <Em className="text-accent-soft block">{emphasis}</Em>
             </h2>
             <div className="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end gap-3">
-              <a href={phoneHref} className="btn btn-accent">
-                <Phone className="h-4 w-4" aria-hidden />
-                {business.phoneDisplay}
-              </a>
-              {business.textEnabled && (
-                <a href={smsHref} className="btn btn-ghost-dark">
-                  <MessageSquare className="h-4 w-4" aria-hidden />
-                  Text
-                </a>
-              )}
-              <Link href={QUOTE_PATH} className="btn btn-bone">
-                Free quote
+              <Link href={href} className="btn btn-accent">
+                Get my price
                 <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
               </Link>
+              {business.textEnabled ? (
+                <TextLink className="btn btn-ghost-dark">
+                  <MessageSquare className="h-4 w-4" aria-hidden />
+                  Text photos
+                </TextLink>
+              ) : (
+                <CallLink className="btn btn-ghost-dark">
+                  <Phone className="h-4 w-4" aria-hidden />
+                  <BizPhone />
+                </CallLink>
+              )}
             </div>
           </div>
         </div>

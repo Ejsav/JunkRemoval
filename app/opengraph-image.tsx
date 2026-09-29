@@ -56,7 +56,6 @@ export default async function OpengraphImage() {
           </div>
         </div>
         <div style={{ flex: 1, display: "flex", position: "relative" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={photoSrc} width={540} height={630} style={{ width: 540, height: 630, objectFit: "cover" }} alt="" />
           <div style={{ position: "absolute", inset: 0, background: `linear-gradient(90deg, ${brand.ink} 0%, rgba(14,15,14,0) 35%)` }} />
         </div>

@@ -5,14 +5,15 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ArrowRight, ArrowUpRight, MessageSquare, Phone } from "lucide-react"
-import { site, phoneHref, smsHref, navItems, QUOTE_PATH } from "@/config/site"
+import { site, navItems, QUOTE_PATH } from "@/config/site"
 import { Wordmark } from "@/components/wordmark"
+import { BizName, BizPhone, CallLink, TextLink } from "@/components/biz"
 
 export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const { phoneDisplay, textEnabled, name, hours } = site.business
+  const { textEnabled, name, hours } = site.business
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -21,7 +22,12 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  useEffect(() => setOpen(false), [pathname])
+  // Close the menu on navigation.
+  const [lastPath, setLastPath] = useState(pathname)
+  if (pathname !== lastPath) {
+    setLastPath(pathname)
+    setOpen(false)
+  }
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
@@ -62,23 +68,24 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-5">
-          <a href={phoneHref} data-cta="header" className="font-mono text-[13px] tracking-tight text-bone/80 hover:text-bone transition-colors">
-            {phoneDisplay}
-          </a>
+          <CallLink data-cta="header" className="font-mono text-[13px] tracking-tight text-bone/80 hover:text-bone transition-colors">
+            <BizPhone />
+          </CallLink>
           <Link href={QUOTE_PATH} data-cta="header" className="btn btn-accent !h-10 !px-5 !text-[14px]">
-            Get a quote
+            Get my price
             <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
           </Link>
         </div>
 
         <div className="flex lg:hidden items-center gap-2">
-          <a href={phoneHref} data-cta="header-mobile" aria-label={`Call ${phoneDisplay}`} className="h-10 w-10 rounded-full bg-accent text-white flex items-center justify-center">
+          <CallLink data-cta="header-mobile" className="h-11 w-11 rounded-full bg-accent text-white flex items-center justify-center">
             <Phone className="h-4 w-4" aria-hidden />
-          </a>
+            <span className="sr-only">Call <BizName /></span>
+          </CallLink>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="h-10 w-10 rounded-full border border-line-dark text-bone flex items-center justify-center"
+            className="h-11 w-11 rounded-full border border-line-dark text-bone flex items-center justify-center"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -110,20 +117,20 @@ export function Header() {
           </nav>
           <div className="relative z-10 px-5 py-8 flex flex-col gap-3" data-section="mobile-menu">
             <Link href={QUOTE_PATH} className="btn btn-accent w-full">
-              Get a free quote <ArrowUpRight className="h-4 w-4" aria-hidden />
+              Get my price <ArrowUpRight className="h-4 w-4" aria-hidden />
             </Link>
             <div className="grid grid-cols-2 gap-3">
-              <a href={phoneHref} className="btn btn-ghost-dark">
+              <CallLink className="btn btn-ghost-dark">
                 <Phone className="h-4 w-4" aria-hidden /> Call
-              </a>
+              </CallLink>
               {textEnabled && (
-                <a href={smsHref} className="btn btn-ghost-dark">
-                  <MessageSquare className="h-4 w-4" aria-hidden /> Text
-                </a>
+                <TextLink className="btn btn-ghost-dark">
+                  <MessageSquare className="h-4 w-4" aria-hidden /> Text photos
+                </TextLink>
               )}
             </div>
             <p className="eyebrow text-mist text-center mt-3">
-              {phoneDisplay} · {hours.label}
+              <BizPhone /> · {hours.label}
             </p>
           </div>
         </div>

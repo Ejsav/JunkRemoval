@@ -1,7 +1,8 @@
 import type React from "react"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
-import { site, QUOTE_PATH } from "@/config/site"
+import { site, QUOTE_PATH, servicePath } from "@/config/site"
+import { TextLink } from "@/components/biz"
 import { Container, Em, Eyebrow, SectionTitle } from "@/components/section-heading"
 
 export function ServicesSection({ n }: { n?: string } = {}) {
@@ -18,13 +19,19 @@ export function ServicesSection({ n }: { n?: string } = {}) {
             Price my job
             <ArrowUpRight className="btn-arrow h-4 w-4" aria-hidden />
           </Link>
+          {site.business.textEnabled && (
+            <p className="text-[14.5px] text-stone mt-6 max-w-xs">
+              Not sure we take something?{" "}
+              <TextLink data-cta="services-unsure" className="text-ink font-medium link-draw">Text us a photo</TextLink> and we&apos;ll tell you.
+            </p>
+          )}
         </div>
 
         <ul className="lg:col-span-8 border-t border-line">
           {site.services.map((s, i) => (
             <li key={s.slug} data-reveal style={{ "--d": `${i * 60}ms` } as React.CSSProperties}>
               <Link
-                href={`/services#${s.slug}`}
+                href={servicePath(s.slug)}
                 className="group grid grid-cols-[2.25rem_1fr_auto] sm:grid-cols-[3.5rem_1fr_auto_auto] items-center gap-x-4 sm:gap-x-6 py-6 sm:py-7 border-b border-line transition-colors duration-500 hover:bg-paper -mx-5 px-5 sm:mx-0 sm:px-3"
               >
                 <span className="font-mono text-[12px] text-stone self-start sm:self-center pt-1 sm:pt-0">{String(i + 1).padStart(2, "0")}</span>

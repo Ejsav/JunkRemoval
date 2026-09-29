@@ -13,17 +13,13 @@ export function ProcessSection({ n }: { n?: string } = {}) {
             <Image src={images.crew} alt={images.crewAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" aria-hidden />
           </div>
-          <div className="absolute -right-2 sm:right-6 -bottom-6 bg-ink text-bone rounded-2xl px-5 py-4 elevated-lg max-w-[15rem]">
-            <p className="eyebrow !text-[10px] text-mist">Typical job</p>
-            <p className="text-[15px] mt-1.5 leading-snug">Arrival to swept floor in under two hours.</p>
-          </div>
         </div>
 
         <div className="lg:col-span-6 lg:col-start-7 order-1 lg:order-2">
           <div data-reveal>
             <Eyebrow index={n}>How it works</Eyebrow>
             <SectionTitle className="mt-6">
-              Three steps. <Em>No surprises.</Em>
+              Three steps. <Em>You lift nothing.</Em>
             </SectionTitle>
           </div>
           <ol className="mt-12 relative">

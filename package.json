@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "node scripts/check-launch.mjs && next build",
+    "check:launch": "node scripts/check-launch.mjs",
     "dev": "next dev",
     "lint": "eslint .",
     "start": "next start"
@@ -66,9 +67,14 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.0.10",
     "postcss": "^8.5",
     "tailwindcss": "^4.1.9",
     "tw-animate-css": "1.3.3",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.18"
   }
 }

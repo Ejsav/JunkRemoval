@@ -1,12 +1,14 @@
 # Re-skinning for a prospect
 
-Everything business-specific lives in `config/site.ts`. You never edit components to personalize a preview.
+Everything business-specific lives in `config/site.ts`. You never edit components to personalize a preview. The /demo sales offer (price, inclusions, owner FAQs) lives in `config/offer.ts`.
+
+**Launch check.** `pnpm build` runs `scripts/check-launch.mjs` first. In `live` mode it **fails the build** if any demo leftover or missing production value remains: demo name, phone, domain, Orlando geo, sample reviews, `/media/` stock photos, empty alt text, the builder's Formspree form, a missing GA4 ID, a missing Blob token, or demo strings hard-coded in `app/` or `components/`. In `preview` mode the same problems print as warnings. Run it any time with `pnpm check:launch`.
 
 ## Modes
 
 | `mode`    | Use for                          | Disclosure bar | "Sample" labels | Indexed | `/demo` page |
 |-----------|----------------------------------|----------------|-----------------|---------|--------------|
-| `demo`    | demojunkremoval.com              | Yes            | Yes             | No      | Yes          |
+| `demo`    | demojunkremoval.com              | Yes            | Yes             | Only `/demo` | Yes     |
 | `preview` | A prospect's personalized concept | Yes ("Preview") | No             | No      | Yes          |
 | `live`    | A paying client's launched site  | No             | No              | Yes     | No (404)     |
 
@@ -25,6 +27,11 @@ Everything business-specific lives in `config/site.ts`. You never edit component
    - `business.*`: name, `wordmark`, phone (`phoneDisplay` and `phoneE164`), email, address, geo, hours, socials
    - `business.reviewSummary`: their real rating, count and URL
    - `business.credentials`: only what they publicly claim (e.g. "Licensed & insured")
+   - `business.serviceRegion` (shown above the hero headline), `guarantee` and `paymentMethods` only if true
+   - `services[*].faqs`: two real worries per service. Each service gets its own page at `/services/<slug>`
+   - `serviceAreas.cities`: every town they cover. Add a `detail` sentence **only** for towns where you can say something specific and true; those get a page at `/service-areas/<slug>`, the rest are listed without one
+   - `projects[*].service`: links each before/after to its service page
+   - `pricing.factors`, `about.disposal`, `about.owner` (a real person makes the site feel less anonymous), `forms.replyNote`
    - `brand.accent` (a deep, muted version of their logo colour; white text must stay readable on it) and `brand.ink`
    - `services`, `pricing`, `serviceAreas.cities`, `reviews`, `projects`
    - `seo.siteUrl`: `https://<slug>.demojunkremoval.com`
@@ -39,8 +46,8 @@ Everything business-specific lives in `config/site.ts`. You never edit component
 1. Create a new Vercel project for the client from the same repo, on a `client/<slug>` branch.
 2. In `config/site.ts`: `mode: "live"`, `seo.siteUrl` = their domain, their own `forms.formspreeId` (a Formspree form under their email), `analytics.ga4Id`.
 3. In the client's Vercel project: Storage → create a Blob store and connect it (adds `BLOB_READ_WRITE_TOKEN` for photo uploads).
-4. Photo uploads appear on the form only once `BLOB_READ_WRITE_TOKEN` exists; until then the form offers "text us photos" instead.
-5. Replace every sample image with their real photos. Confirm no sample content remains (`mode: "live"` removes the labels, not the content).
+4. Photo uploads appear on the form only once `BLOB_READ_WRITE_TOKEN` exists; until then the form, quote section and FAQ all switch to "text us photos", so the copy never promises an uploader that isn't there.
+5. Replace every sample image with their real photos (keep the same aspect ratios: before/after pairs framed identically, 4:3). `mode: "live"` removes the labels, not the content; the launch check blocks the build until the sample content is gone.
 6. Connect their domain, then submit a test quote, tap Call and Text on a real phone, and check the lead arrives.
 7. Submit `https://<domain>/sitemap.xml` in Google Search Console and link the site from their Google Business Profile.
 

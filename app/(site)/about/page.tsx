@@ -31,6 +31,20 @@ export default function AboutPage() {
                 <p key={p.slice(0, 20)}>{p}</p>
               ))}
             </div>
+            {business.guarantee && (
+              <p className="mt-8 border-l-2 border-accent pl-5 text-[17px] text-ink leading-relaxed">{business.guarantee}</p>
+            )}
+            {about.owner && (
+              <figure className="mt-10 flex items-start gap-5">
+                {about.owner.photo && (
+                  <Image src={about.owner.photo} alt={about.owner.name} width={72} height={72} className="h-[72px] w-[72px] rounded-full object-cover" />
+                )}
+                <div>
+                  <blockquote className="serif-em text-[22px] leading-snug text-ink">&ldquo;{about.owner.quote}&rdquo;</blockquote>
+                  <figcaption className="text-[14px] text-stone mt-3">{about.owner.name} · {about.owner.role}</figcaption>
+                </div>
+              </figure>
+            )}
             {business.credentials.length > 0 && (
               <ul className="flex flex-wrap gap-2 mt-8">
                 {business.credentials.map((c) => (
@@ -50,7 +64,7 @@ export default function AboutPage() {
               <Image src={images.recycling} alt={images.recyclingAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 33vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" aria-hidden />
               <p className="absolute left-6 right-6 bottom-6 text-bone text-[15px] leading-snug">
-                Usable items are donated, recyclables recycled. The landfill is the last stop, not the first.
+                {about.disposal}
               </p>
             </div>
           </div>

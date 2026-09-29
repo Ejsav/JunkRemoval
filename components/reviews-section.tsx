@@ -28,8 +28,8 @@ function Byline({ r }: { r: Review }) {
   )
 }
 
-export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "h1" | "h2"; n?: string }) {
-  const reviews = limit ? site.reviews.slice(0, limit) : site.reviews
+export function ReviewsSection({ limit, as = "h2", n, items = site.reviews }: { limit?: number; as?: "h1" | "h2"; n?: string; items?: Review[] }) {
+  const reviews = limit ? items.slice(0, limit) : items
   const [featured, ...rest] = reviews
   const summary = site.business.reviewSummary
 
@@ -40,7 +40,7 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
           <div>
             <Eyebrow index={n}>Reviews</Eyebrow>
             <SectionTitle as={as} className="mt-6">
-              Said by <Em>customers.</Em>
+              What customers say <Em>after the truck leaves.</Em>
             </SectionTitle>
           </div>
           <div className="lg:text-right">
@@ -54,7 +54,7 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
             ) : (
               isSampleContent && (
                 <p className="text-stone max-w-xs text-[14.5px]">
-                  <SampleBadge label="Sample reviews" /> <span className="block mt-2">Replaced with the client&apos;s real Google reviews at launch.</span>
+                  <SampleBadge label="Sample reviews" /> <span className="block mt-2">Written for the demo. A real site shows the owner&apos;s Google reviews.</span>
                 </p>
               )
             )}
