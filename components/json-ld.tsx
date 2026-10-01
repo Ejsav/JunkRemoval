@@ -28,7 +28,7 @@ export function localBusinessSchema() {
     priceRange: business.priceRange,
     address,
     geo: { "@type": "GeoCoordinates", latitude: business.geo.lat, longitude: business.geo.lng },
-    areaServed: serviceAreas.cities.map((name) => ({ "@type": "City", name })),
+    areaServed: serviceAreas.cities.map((c) => ({ "@type": "City", name: c.name })),
     openingHoursSpecification: business.hours.schema.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: h.days,

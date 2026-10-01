@@ -25,6 +25,8 @@ export type Service = {
   description: string
   examples: string[]
   priceFrom?: number
+  /** Answers to the worries specific to this job. Shown on the service's own page. */
+  faqs?: { q: string; a: string }[]
 }
 
 export type Review = {
@@ -42,6 +44,15 @@ export type Project = {
   description: string
   before: string
   after: string
+  /** Service slug, so the project also appears on that service's page. */
+  service?: string
+}
+
+export type City = {
+  name: string
+  slug: string
+  /** Only cities with real, specific detail get their own page. No thin doorway pages. */
+  detail?: string
 }
 
 export type PriceTier = {
@@ -61,7 +72,8 @@ export const site = {
     email: "hello@ericjokl.com",
     phoneDisplay: "(860) 406-0262",
     phoneE164: "+18604060262",
-    offerPrice: 750,
+    /** Formspree form that receives prospect preview requests from /demo. */
+    formspreeId: "xojkykdk",
   },
 
   business: {
@@ -70,6 +82,8 @@ export const site = {
     /** Optional square logo image in /public. Leave empty to use the wordmark + icon. */
     logo: "",
     tagline: "Junk removal done right, priced upfront.",
+    /** Shown above the hero headline so visitors know instantly they found a local company. */
+    serviceRegion: "Orlando & Central Florida",
     description:
       "Residential and commercial junk removal with upfront pricing, careful crews and same-day availability. We lift, load, sweep up and donate or recycle what we can.",
     phoneDisplay: "(407) 801-7886",
@@ -94,6 +108,10 @@ export const site = {
     priceRange: "$$",
     /** Only list what the business can prove. Empty in demo mode on purpose. */
     credentials: [] as string[],
+    /** A guarantee the business actually honours, in one sentence. Empty hides it. */
+    guarantee: "",
+    /** e.g. ["Card", "Cash", "Zelle"]. Empty hides it. */
+    paymentMethods: [] as string[],
     /** Real public review summary. Leave null until you have the real numbers. */
     reviewSummary: null as null | { rating: number; count: number; platform: string; url: string },
     socials: {
@@ -115,14 +133,14 @@ export const site = {
 
   /** Art-directed imagery in /public/media. Swap these for the client's own photos. */
   images: {
-    crew: "/media/crew.jpg",
-    crewAlt: "Crew carrying a sofa to a junk removal truck",
-    recycling: "/media/recycling.jpg",
-    recyclingAlt: "Sorted materials at a recycling facility",
-    finished: "/media/finished-room.jpg",
-    finishedAlt: "A clean, empty living room after a cleanout",
-    commercial: "/media/commercial.jpg",
-    commercialAlt: "Office floor being cleared of furniture",
+    crew: "/media/crew-loading-sofa-truck.jpg",
+    crewAlt: "Two crew members loading a sofa into a box truck",
+    recycling: "/media/donation-dropoff.jpg",
+    recyclingAlt: "Crew dropping off furniture and boxes at a donation center",
+    finished: "/media/finished-empty-room.jpg",
+    finishedAlt: "An empty, swept room with hardwood floors after a cleanout",
+    commercial: "/media/office-cluttered.jpg",
+    commercialAlt: "A cluttered office before a commercial cleanout",
   },
 
   seo: {
@@ -134,17 +152,11 @@ export const site = {
   },
 
   hero: {
-    eyebrow: "Same-day pickup available",
     headline: ["Junk gone today.", "Priced before we lift a thing."],
     subhead:
       "Tell us what needs to go, or text a photo. You get a firm price, an arrival window we keep, and a crew that leaves the place swept.",
-    image: "/media/hero.jpg",
-    imageAlt: "Junk removal truck in a driveway next to a pile of furniture and boxes",
-    bullets: [
-      "Firm price before any work starts",
-      "We do all the lifting, loading and sweeping",
-      "Donate and recycle wherever possible",
-    ],
+    image: "/media/crew-carrying-sofa-garage.jpg",
+    imageAlt: "Two crew members carrying an old sofa from a garage to a loaded junk removal truck",
   },
 
   /** Short trust points under the hero. Keep to things the business actually does. */
@@ -164,6 +176,10 @@ export const site = {
       description: "Single items or a whole room. We carry it out from any floor, so you never touch it.",
       examples: ["Sofas & sectionals", "Mattresses & box springs", "Dressers & desks", "Recliners"],
       priceFrom: 89,
+    faqs: [
+        { q: "Do I need to bring it downstairs?", a: "No. The crew carries items out from any room or floor, including apartments without elevators. Mention stairs in your request so the price already accounts for them." },
+        { q: "Can you take a mattress?", a: "Yes. Some disposal sites charge a small mattress fee, and it's included in your quote before we start." },
+      ],
     },
     {
       slug: "appliance-removal",
@@ -173,6 +189,10 @@ export const site = {
       description: "Disconnected appliances hauled and routed to proper recycling, refrigerants included.",
       examples: ["Refrigerators & freezers", "Washers & dryers", "Stoves & dishwashers", "Water heaters"],
       priceFrom: 99,
+    faqs: [
+        { q: "Does the appliance need to be disconnected?", a: "Please have it disconnected from water and gas before we arrive. We can unplug and move it, but we don't do plumbing or gas work." },
+        { q: "What happens to the refrigerant?", a: "Fridges, freezers and AC units go to recyclers that recover refrigerant properly, not straight to landfill." },
+      ],
     },
     {
       slug: "garage-cleanouts",
@@ -182,6 +202,10 @@ export const site = {
       description: "Point at what goes. We sort, load and sweep so you can park in there again.",
       examples: ["Boxes & storage", "Old tools & equipment", "Exercise machines", "Shelving"],
       priceFrom: 149,
+    faqs: [
+        { q: "Do I have to sort everything first?", a: "No. Point at what goes and what stays. Setting aside anything you want to keep before we arrive makes it faster." },
+        { q: "How is a garage priced?", a: "By how much of the truck it fills. Photos of the whole garage, taken from the door, are usually enough for a firm price." },
+      ],
     },
     {
       slug: "estate-cleanouts",
@@ -191,6 +215,10 @@ export const site = {
       description: "For families, executors and realtors. Items worth keeping get set aside, the rest is donated or disposed of properly.",
       examples: ["Full-house cleanouts", "Hoarding situations", "Pre-sale cleanouts", "Donation coordination"],
       priceFrom: 449,
+    faqs: [
+        { q: "Can family members keep certain items?", a: "Yes. Tell us or mark what stays, and the crew works around it. Anything that turns up that looks personal or valuable is set aside for you." },
+        { q: "Can you work with a realtor or executor who isn't local?", a: "Yes. We can quote from photos, arrange access and send photos when the job is done." },
+      ],
     },
     {
       slug: "commercial-junk-removal",
@@ -200,6 +228,10 @@ export const site = {
       description: "After-hours scheduling available, with invoicing for property managers and businesses.",
       examples: ["Office furniture", "Tenant turnovers", "Retail fixtures", "E-waste"],
       priceFrom: 299,
+    faqs: [
+        { q: "Can you work after hours?", a: "After-hours and weekend slots are available for offices and retail spaces, so work isn't interrupted." },
+        { q: "Do you invoice businesses?", a: "Yes. Property managers and businesses can be invoiced instead of paying on the day." },
+      ],
     },
     {
       slug: "yard-debris-removal",
@@ -209,6 +241,10 @@ export const site = {
       description: "Storm cleanup, shed teardowns and leftover renovation debris, loaded and gone.",
       examples: ["Branches & brush", "Shed demolition", "Drywall & lumber", "Fencing"],
       priceFrom: 99,
+    faqs: [
+        { q: "Do you take construction debris?", a: "Yes: drywall, lumber, flooring, fencing and other renovation waste. Heavy materials like concrete and dirt are priced by weight, so mention them in your request." },
+        { q: "Can you tear down a shed?", a: "Yes, for standard wooden and metal sheds. We take it down, load it and clear the site." },
+      ],
     },
   ] as Service[],
 
@@ -224,28 +260,38 @@ export const site = {
       title: "Garage Cleanout",
       location: "Winter Park",
       description: "A full two-car garage of stored boxes and old furniture, cleared in one visit.",
-      before: "/media/garage-before.jpg",
-      after: "/media/garage-after.jpg",
+      before: "/media/garage-cleanout-before.jpg",
+      after: "/media/garage-cleanout-after.jpg",
+      service: "garage-cleanouts",
     },
     {
       title: "Estate Cleanout",
       location: "Lake Nona",
-      description: "A four-bedroom home emptied, with keepsakes set aside for the family.",
-      before: "/media/estate-before.jpg",
-      after: "/media/estate-after.jpg",
+      description: "A bedroom cleared of boxes, bags and clutter. The furniture the family kept stayed in place.",
+      before: "/media/bedroom-cleanout-before.jpg",
+      after: "/media/bedroom-cleanout-after.jpg",
+      service: "estate-cleanouts",
     },
     {
       title: "Office Cleanout",
       location: "Downtown Orlando",
-      description: "Desks, chairs and e-waste removed before a new tenant moved in.",
-      before: "/media/office-before.jpg",
-      after: "/media/office-after.jpg",
+      description: "Boxes, old equipment and bagged clutter cleared from an open-plan office. Desks left ready to work.",
+      before: "/media/office-cleanout-before.jpg",
+      after: "/media/office-cleanout-after.jpg",
+      service: "commercial-junk-removal",
     },
   ] as Project[],
 
   pricing: {
     intro: "Priced by how much space your items take in the truck. Your quote is locked before we start.",
     note: "Heavy materials, mattresses and some appliances can carry small disposal fees. We tell you upfront.",
+    /** What moves the price. Answers "why can't you just tell me a number?" */
+    factors: [
+      { title: "Volume", text: "How much of the truck your items fill. This sets most of the price." },
+      { title: "Weight", text: "Dense loads like concrete, dirt or roofing are priced by weight." },
+      { title: "Access", text: "Long carries, stairs or tight spaces take more time." },
+      { title: "Disposal fees", text: "Mattresses, tyres and some appliances carry site fees, quoted upfront." },
+    ],
     tiers: [
       { name: "Single item", volume: "1–2 items", price: "from $89", description: "A couch, a fridge, a mattress." },
       { name: "Quarter load", volume: "~¼ truck", price: "from $189", description: "A room of furniture or a small cleanout." },
@@ -257,9 +303,19 @@ export const site = {
   serviceAreas: {
     intro: "Based in Orlando and serving homes and businesses across Central Florida.",
     cities: [
-      "Orlando", "Winter Park", "Lake Nona", "Kissimmee", "Sanford", "Apopka",
-      "Maitland", "Ocoee", "Altamonte Springs", "Clermont", "Winter Garden", "Oviedo",
-    ],
+      { name: "Orlando", slug: "orlando", detail: "Our home base. Trucks run across the city every day, from downtown condos and College Park bungalows to MetroWest apartments, so same-day slots are most likely here." },
+      { name: "Winter Park", slug: "winter-park", detail: "Regular runs through Winter Park, Baldwin Park and Aloma. We work carefully around older homes, narrow driveways and HOA rules." },
+      { name: "Lake Nona", slug: "lake-nona", detail: "Newer homes, move-outs and garage cleanouts across Lake Nona and the Medical City area, a short drive from our Orlando base." },
+      { name: "Kissimmee", slug: "kissimmee", detail: "Furniture, appliance and rental-turnover removal across Kissimmee and the vacation-rental communities off US-192." },
+      { name: "Sanford", slug: "sanford" },
+      { name: "Apopka", slug: "apopka" },
+      { name: "Maitland", slug: "maitland" },
+      { name: "Ocoee", slug: "ocoee" },
+      { name: "Altamonte Springs", slug: "altamonte-springs" },
+      { name: "Clermont", slug: "clermont" },
+      { name: "Winter Garden", slug: "winter-garden" },
+      { name: "Oviedo", slug: "oviedo" },
+    ] as City[],
   },
 
   /** In demo mode these render with a "Sample review" label. Replace with real reviews for a preview. */
@@ -315,7 +371,9 @@ export const site = {
     },
     {
       q: "Can I get a quote from photos?",
-      a: "Yes. Upload a few photos with the quote form or text them to us. For most jobs, photos are enough for a firm price.",
+      a: "Yes. Add a few photos to the quote form or text them to us. For most jobs, photos are enough for a firm price.",
+      /** Used instead of `a` when photo uploads aren't configured, so the site never promises an uploader it doesn't show. */
+      aWithoutUploads: "Yes. Text a few photos to us. For most jobs, photos are enough for a firm price.",
     },
     {
       q: "Do you offer same-day pickup?",
@@ -341,6 +399,10 @@ export const site = {
       "We started this company because hiring someone to haul junk shouldn't feel like a gamble. Too many people get a vague phone quote, a late crew and a surprise bill.",
       "So we do it differently: a firm price before we start, an arrival window we keep, and a crew that treats your home like theirs. When we leave, the space is empty and swept.",
     ],
+    /** How the business really handles disposal. Shown over the recycling photo. */
+    disposal: "Usable items are donated, recyclables recycled. The landfill is the last stop, not the first.",
+    /** Owner or team intro. Replace with a real person at launch; null hides it. */
+    owner: null as null | { name: string; role: string; photo?: string; quote: string },
   },
 
   forms: {
@@ -349,6 +411,8 @@ export const site = {
     /** Photo uploads use Vercel Blob. Needs BLOB_READ_WRITE_TOKEN in the Vercel project. */
     photoUploads: true,
     maxPhotos: 6,
+    /** Shown beside the submit button. Only promise what the business really does. */
+    replyNote: "We reply with your price during business hours. Sending this doesn't commit you to booking.",
   },
 
   analytics: {
@@ -364,6 +428,13 @@ export const isSampleContent = site.mode === "demo"
 export const phoneHref = `tel:${site.business.phoneE164}`
 export const smsHref = `sms:${site.business.phoneE164}?&body=${encodeURIComponent(site.business.textMessage)}`
 export const QUOTE_PATH = "/quote"
+export const quoteHref = (params: { service?: string; location?: string } = {}) => {
+  const q = new URLSearchParams(Object.entries(params).filter(([, v]) => v) as [string, string][]).toString()
+  return q ? `${QUOTE_PATH}?${q}` : QUOTE_PATH
+}
+export const cityPages = site.serviceAreas.cities.filter((c) => c.detail)
+export const servicePath = (slug: string) => `/services/${slug}`
+export const cityPath = (city: City) => (city.detail ? `/service-areas/${city.slug}` : "/service-areas")
 export const navItems = [
   { href: "/services", label: "Services" },
   { href: "/pricing", label: "Pricing" },

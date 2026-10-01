@@ -48,7 +48,7 @@ export function PricingSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: string 
               <span>
                 <span className="flex items-center gap-3">
                   <span className="text-[20px] sm:text-[22px] font-semibold tracking-[-0.025em]">{t.name}</span>
-                  {t.popular && <span className="eyebrow !text-[9.5px] rounded-full bg-accent text-white px-2.5 py-1">Most booked</span>}
+                  {t.popular && <span className="eyebrow !text-[9.5px] rounded-full bg-accent text-white px-2.5 py-1">Most common</span>}
                 </span>
                 <span className={`block text-[14px] mt-1 ${t.popular ? "text-mist" : "text-stone"}`}>{t.description}</span>
               </span>
@@ -66,13 +66,31 @@ export function PricingSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: string 
           ))}
         </ul>
 
-        <div className="mt-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="mt-12 grid lg:grid-cols-12 gap-8 lg:gap-10">
+          <div className="lg:col-span-4">
+            <h3 className="text-[20px] font-semibold tracking-[-0.025em]">What sets your price</h3>
+            <p className="text-[14.5px] text-stone mt-2 leading-relaxed">
+              Prices above are starting points, not quotes. Your firm price comes from your photos or a quick look, and it&apos;s locked before we lift anything.
+            </p>
+          </div>
+          <dl className="lg:col-span-8 grid sm:grid-cols-2 gap-x-10 border-t border-line">
+            {pricing.factors.map((f) => (
+              <div key={f.title} className="py-5 border-b border-line">
+                <dt className="text-[15px] font-semibold text-ink">{f.title}</dt>
+                <dd className="text-[14.5px] text-stone mt-1 leading-relaxed">{f.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="mt-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <p className="text-[14px] text-stone max-w-2xl flex flex-wrap items-center gap-3">
             {isSampleContent && <SampleBadge label="Example pricing" />}
             {pricing.note}
+            {site.business.paymentMethods.length > 0 && <span>We accept {site.business.paymentMethods.join(", ")}.</span>}
           </p>
-          <Link href={QUOTE_PATH} data-cta="pricing" className="btn btn-ink shrink-0">
-            Get your exact price
+          <Link href={QUOTE_PATH} data-cta="pricing" className="btn btn-accent shrink-0">
+            Send photos for your exact price
             <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
           </Link>
         </div>

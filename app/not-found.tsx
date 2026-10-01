@@ -1,9 +1,11 @@
 import Link from "next/link"
 import { site, phoneHref, QUOTE_PATH } from "@/config/site"
 import { Em } from "@/components/section-heading"
+import { SiteChrome } from "@/components/site-chrome"
 
 export default function NotFound() {
   return (
+    <SiteChrome>
     <section className="surface-dark grain relative overflow-hidden">
       <div className="absolute inset-0 hairline-grid pointer-events-none" aria-hidden />
       <div className="relative z-10 mx-auto max-w-3xl px-5 py-28 sm:py-36 text-center">
@@ -13,11 +15,12 @@ export default function NotFound() {
         </h1>
         <p className="lede text-mist mt-6">It doesn&apos;t exist anymore. Here&apos;s where you probably wanted to go.</p>
         <div className="flex flex-col sm:flex-row justify-center gap-3 mt-10">
-          <Link href={QUOTE_PATH} className="btn btn-accent">Get a free quote</Link>
+          <Link href={QUOTE_PATH} className="btn btn-accent">Get my price</Link>
           <a href={phoneHref} className="btn btn-ghost-dark">Call {site.business.phoneDisplay}</a>
           <Link href="/" className="btn btn-ghost-dark">Home</Link>
         </div>
       </div>
     </section>
+    </SiteChrome>
   )
 }

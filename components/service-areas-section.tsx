@@ -1,10 +1,11 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { site, phoneHref, QUOTE_PATH } from "@/config/site"
+import { site, QUOTE_PATH, cityPath } from "@/config/site"
+import { BizCity, BizPhone, CallLink } from "@/components/biz"
 import { Container, Em, Eyebrow, SectionTitle } from "@/components/section-heading"
 
 export function ServiceAreasSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: string }) {
-  const { serviceAreas, business } = site
+  const { serviceAreas } = site
   const { cities } = serviceAreas
 
   return (
@@ -14,14 +15,14 @@ export function ServiceAreasSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: st
         <div className="lg:col-span-4" data-reveal>
           <Eyebrow index={n}>Service area</Eyebrow>
           <SectionTitle as={as} className="mt-6">
-            Local to <Em>{business.address.city}.</Em>
+            Local to <Em><BizCity />.</Em>
           </SectionTitle>
           <p className="lede text-stone mt-6 max-w-sm">{serviceAreas.intro}</p>
           <p className="text-[14.5px] text-stone mt-8">
             Don&apos;t see your town?{" "}
-            <a href={phoneHref} data-cta="service-areas" className="text-ink font-medium link-draw">
-              Call {business.phoneDisplay}
-            </a>
+            <CallLink data-cta="service-areas" className="text-ink font-medium link-draw">
+              Call <BizPhone />
+            </CallLink>
             . We often travel further.
           </p>
         </div>
@@ -29,17 +30,23 @@ export function ServiceAreasSection({ as = "h2", n }: { as?: "h1" | "h2"; n?: st
         <div className="lg:col-span-8 lg:pl-10">
           <p className="headline !leading-[1.22] text-[clamp(1.75rem,3.4vw,3rem)] text-ink" data-reveal>
             {cities.map((city, i) => (
-              <span key={city}>
-                <span className={`whitespace-nowrap ${i === 0 ? "inline-flex items-center gap-3" : "text-stone/75 hover:text-ink transition-colors duration-300"}`}>
+              <span key={city.slug}>
+                <span className={`whitespace-nowrap ${i === 0 ? "inline-flex items-center gap-3" : ""}`}>
                   {i === 0 && <span className="h-3 w-3 rounded-full bg-accent ring-4 ring-accent/15" aria-hidden />}
-                  {city}
+                  {city.detail ? (
+                    <Link href={cityPath(city)} className={`${i === 0 ? "" : "text-stone/75"} hover:text-ink underline decoration-line decoration-1 underline-offset-[0.18em] hover:decoration-ink transition-colors duration-300`}>
+                      {city.name}
+                    </Link>
+                  ) : (
+                    <span className={i === 0 ? "" : "text-stone/75"}>{city.name}</span>
+                  )}
                   {i < cities.length - 1 && <span className="text-line font-light ml-2 sm:ml-3" aria-hidden>/</span>}
                 </span>{" "}
               </span>
             ))}
           </p>
           <Link href={QUOTE_PATH} data-cta="service-areas" className="btn btn-ink mt-12">
-            Check availability
+            Check my ZIP & availability
             <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
           </Link>
         </div>

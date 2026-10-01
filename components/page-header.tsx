@@ -10,13 +10,19 @@ export function PageHeader({
   intro,
   image,
   imageAlt = "",
+  parent,
+  children,
 }: {
   eyebrow: string
-  title: string
-  emphasis?: string
+  title: React.ReactNode
+  emphasis?: React.ReactNode
   intro?: string
   image?: string
   imageAlt?: string
+  /** Middle breadcrumb, e.g. Services on a single service page. */
+  parent?: { href: string; label: string }
+  /** Actions or key facts under the intro. */
+  children?: React.ReactNode
 }) {
   return (
     <section className="surface-dark grain relative overflow-hidden">
@@ -26,7 +32,13 @@ export function PageHeader({
           <nav aria-label="Breadcrumb" className="rise eyebrow text-mist flex items-center gap-2.5 mb-8">
             <Link href="/" className="hover:text-bone transition-colors">Home</Link>
             <span className="text-line-dark" aria-hidden>/</span>
-            <span className="text-accent-soft">{eyebrow}</span>
+            {parent && (
+              <>
+                <Link href={parent.href} className="hover:text-bone transition-colors">{parent.label}</Link>
+                <span className="text-line-dark" aria-hidden>/</span>
+              </>
+            )}
+            <span className="text-accent-soft" aria-current="page">{eyebrow}</span>
           </nav>
           <h1 className="rise display text-[clamp(2.75rem,7vw,6rem)] text-bone" style={{ "--d": "60ms" } as React.CSSProperties}>
             {title}
@@ -37,6 +49,7 @@ export function PageHeader({
               {intro}
             </p>
           )}
+          {children && <div className="rise mt-9" style={{ "--d": "200ms" } as React.CSSProperties}>{children}</div>}
         </div>
         {image && (
           <div className="float-in lg:col-span-5 relative aspect-[16/10] lg:aspect-[4/3] rounded-[24px] overflow-hidden ring-1 ring-line-dark elevated-lg" style={{ "--d": "160ms" } as React.CSSProperties}>

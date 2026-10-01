@@ -5,13 +5,8 @@ import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { site, isLive } from "@/config/site"
-import { DemoBar } from "@/components/demo-bar"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { MobileActionBar } from "@/components/mobile-action-bar"
 import { ConversionTracker } from "@/components/conversion-tracker"
 import { RevealObserver } from "@/components/reveal-observer"
-import { JsonLd, localBusinessSchema } from "@/components/json-ld"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" })
@@ -51,23 +46,21 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           dangerouslySetInnerHTML={{
             __html: `document.documentElement.classList.add('js');${
-              isLive ? "" : "try{var a=localStorage.getItem('demo-accent');if(a)document.documentElement.style.setProperty('--accent',a)}catch(e){}"
+              isLive
+                ? ""
+                : // The prospect's colour recolours the customer site only, never the /demo sales page.
+                  "try{var p=JSON.parse(localStorage.getItem('demo-preview')||'null');if(p&&p.accent&&location.pathname.indexOf('/demo')!==0)document.documentElement.style.setProperty('--accent',p.accent)}catch(e){}"
             }`,
           }}
         />
       </head>
-      <body className="font-sans antialiased pb-[76px] lg:pb-0">
+      <body className="font-sans antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-paper focus:px-4 focus:py-2 focus:rounded-full focus:shadow-lg">
           Skip to content
         </a>
-        <DemoBar />
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <MobileActionBar />
+        {children}
         <ConversionTracker />
         <RevealObserver />
-        <JsonLd data={localBusinessSchema()} />
         <Analytics />
         {ga4Id && (
           <>

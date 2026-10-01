@@ -1,8 +1,11 @@
 import { Plus } from "lucide-react"
-import { site, phoneHref, smsHref } from "@/config/site"
+import { site } from "@/config/site"
+import { photoUploadsEnabled } from "@/lib/capabilities"
+import { CallLink, TextLink } from "@/components/biz"
 import { Container, Em, Eyebrow, SectionTitle } from "@/components/section-heading"
 
-export function FaqSection({ n }: { n?: string } = {}) {
+export function FaqSection({ n, items }: { n?: string; items?: { q: string; a: string }[] } = {}) {
+  const faqs = items ?? site.faqs.map((f) => ({ q: f.q, a: !photoUploadsEnabled && "aWithoutUploads" in f && f.aWithoutUploads ? f.aWithoutUploads : f.a }))
   const { business } = site
   return (
     <section id="faq" data-section="faq" className="bg-paper py-24 sm:py-32 border-t border-line">
@@ -10,15 +13,15 @@ export function FaqSection({ n }: { n?: string } = {}) {
         <div className="lg:col-span-4 lg:sticky lg:top-28 self-start" data-reveal>
           <Eyebrow index={n}>FAQ</Eyebrow>
           <SectionTitle className="mt-6">
-            Good <Em>questions.</Em>
+            Answers <Em>before you book.</Em>
           </SectionTitle>
           <p className="text-[15px] text-stone mt-6">
             Something else?{" "}
-            <a href={phoneHref} className="text-ink font-medium link-draw">Call</a>
+            <CallLink className="text-ink font-medium link-draw">Call</CallLink>
             {business.textEnabled && (
               <>
                 {" "}or{" "}
-                <a href={smsHref} className="text-ink font-medium link-draw">text us</a>
+                <TextLink className="text-ink font-medium link-draw">text us</TextLink>
               </>
             )}
             .
@@ -26,7 +29,7 @@ export function FaqSection({ n }: { n?: string } = {}) {
         </div>
 
         <div className="lg:col-span-7 lg:col-start-6 border-t border-ink/80" data-reveal>
-          {site.faqs.map((f) => (
+          {faqs.map((f) => (
             <details key={f.q} className="group border-b border-line">
               <summary className="flex items-center justify-between gap-6 py-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                 <span className="text-[18px] sm:text-[20px] font-medium tracking-[-0.02em] text-ink">{f.q}</span>
