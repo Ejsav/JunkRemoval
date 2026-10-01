@@ -51,6 +51,10 @@ Everything business-specific lives in `config/site.ts`. You never edit component
 6. Connect their domain, then submit a test quote, tap Call and Text on a real phone, and check the lead arrives.
 7. Submit `https://<domain>/sitemap.xml` in Google Search Console and link the site from their Google Business Profile.
 
+## Lead sheet (optional, recommended)
+
+Every quote request can also land as a row in a Google Sheet, with up to four photo thumbnails, links to all photos, a status dropdown (New / Quoted / Booked / Done / Lost) and where the lead came from. Setup steps are at the top of `integrations/google-sheet-leads.gs`: paste it into the sheet's Apps Script, deploy it as a web app, then set `LEADS_SHEET_URL` and `LEADS_SHEET_SECRET` in Vercel and redeploy. Email and sheet are sent in parallel: a request counts as delivered if either arrives.
+
 ## Conversion tracking
 
 Every call, text, email, quote CTA click, form start, submit, photo estimate and error is tracked by `components/conversion-tracker.tsx` and `lib/track.ts`:

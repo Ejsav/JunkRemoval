@@ -169,26 +169,39 @@ export function QuoteForm({ uploads, defaultService = "", defaultLocation = "" }
     setProgress("Sending your request…")
     try {
       const serviceTitle = services.find((s) => s.slug === fields.service)?.title ?? "Not sure / a mix"
-      const res = await fetch(`https://formspree.io/f/${forms.formspreeId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          _subject: `New quote request: ${fields.name} (${fields.location})${photoUrls.length ? ` · ${photoUrls.length} photos` : ""}`,
-          _gotcha: honeypot.current?.value,
-          name: fields.name,
-          phone: formatPhone(fields.phone),
-          email: fields.email || undefined,
-          _replyto: fields.email || undefined,
-          location: fields.location,
-          service: serviceTitle,
-          details: fields.details || "None",
-          preferred_contact: fields.contactPref,
-          photos: photoUrls.length ? photoUrls.join("\n") : "None",
-          ...getLeadSource(),
-          site: `${business.name} (${mode})`,
+      const lead = {
+        name: fields.name,
+        phone: formatPhone(fields.phone),
+        email: fields.email || undefined,
+        location: fields.location,
+        service: serviceTitle,
+        details: fields.details || "None",
+        preferred_contact: fields.contactPref,
+        ...getLeadSource(),
+      }
+      // Email (Formspree) and the lead sheet are sent in parallel; the request counts as
+      // delivered if either one lands, so a single outage never loses a lead.
+      const [email, sheet] = await Promise.allSettled([
+        fetch(`https://formspree.io/f/${forms.formspreeId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            ...lead,
+            _subject: `New quote request: ${fields.name} (${fields.location})${photoUrls.length ? ` · ${photoUrls.length} photos` : ""}`,
+            _gotcha: honeypot.current?.value,
+            _replyto: fields.email || undefined,
+            photos: photoUrls.length ? photoUrls.join("\n") : "None",
+            site: `${business.name} (${mode})`,
+          }),
         }),
-      })
-      if (!res.ok) throw new Error(String(res.status))
+        fetch("/api/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...lead, photos: photoUrls, _gotcha: honeypot.current?.value }),
+        }),
+      ])
+      const delivered = (r: PromiseSettledResult<Response>, ok: (res: Response) => boolean) => r.status === "fulfilled" && ok(r.value)
+      if (!delivered(email, (r) => r.ok) && !delivered(sheet, (r) => r.status === 200)) throw new Error("not delivered")
       trackEvent("quote_form_submit", { service: serviceTitle, photos: photoUrls.length })
       if (photoUrls.length) trackEvent("photo_estimate_submit", { photos: photoUrls.length })
       setSentPhotos(photoUrls.length)

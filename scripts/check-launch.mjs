@@ -64,6 +64,8 @@ else if (live && forms.formspreeId === builder.formspreeId) fail("forms.formspre
 if (live && !/^G-[A-Z0-9]{6,}$/.test(analytics.ga4Id)) fail(`analytics.ga4Id "${analytics.ga4Id}" is missing or not a GA4 ID`)
 if (forms.photoUploads && !process.env.BLOB_READ_WRITE_TOKEN) (live ? fail : warn)("BLOB_READ_WRITE_TOKEN is not set: the photo uploader will be hidden. Connect a Vercel Blob store or set forms.photoUploads to false")
 
+if (!process.env.LEADS_SHEET_URL) warn("LEADS_SHEET_URL is not set: leads arrive by email only (see integrations/google-sheet-leads.gs)")
+
 // ── Domain & SEO ─────────────────────────────────────────
 if (live && seo.siteUrl.includes(DEMO.domain)) fail("seo.siteUrl is still on the demo domain")
 if (!/^https:\/\//.test(seo.siteUrl) || /localhost|vercel\.app/.test(seo.siteUrl)) fail(`seo.siteUrl "${seo.siteUrl}" must be the client's https production domain`)
