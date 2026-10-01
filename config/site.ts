@@ -133,14 +133,14 @@ export const site = {
 
   /** Art-directed imagery in /public/media. Swap these for the client's own photos. */
   images: {
-    crew: "/media/crew.jpg",
-    crewAlt: "Crew carrying a sofa to a junk removal truck",
-    recycling: "/media/recycling.jpg",
-    recyclingAlt: "Sorted materials at a recycling facility",
-    finished: "/media/finished-room.jpg",
-    finishedAlt: "A clean, empty living room after a cleanout",
-    commercial: "/media/commercial.jpg",
-    commercialAlt: "Office floor being cleared of furniture",
+    crew: "/media/crew-loading-sofa-truck.jpg",
+    crewAlt: "Two crew members loading a sofa into a box truck",
+    recycling: "/media/donation-dropoff.jpg",
+    recyclingAlt: "Crew dropping off furniture and boxes at a donation center",
+    finished: "/media/finished-empty-room.jpg",
+    finishedAlt: "An empty, swept room with hardwood floors after a cleanout",
+    commercial: "/media/office-cluttered.jpg",
+    commercialAlt: "A cluttered office before a commercial cleanout",
   },
 
   seo: {
@@ -155,8 +155,8 @@ export const site = {
     headline: ["Junk gone today.", "Priced before we lift a thing."],
     subhead:
       "Tell us what needs to go, or text a photo. You get a firm price, an arrival window we keep, and a crew that leaves the place swept.",
-    image: "/media/hero.jpg",
-    imageAlt: "Junk removal truck in a driveway next to a pile of furniture and boxes",
+    image: "/media/crew-loading-sofa-driveway.jpg",
+    imageAlt: "Two crew members carrying an old sofa down a driveway to a junk removal truck",
   },
 
   /** Short trust points under the hero. Keep to things the business actually does. */
@@ -260,24 +260,24 @@ export const site = {
       title: "Garage Cleanout",
       location: "Winter Park",
       description: "A full two-car garage of stored boxes and old furniture, cleared in one visit.",
-      before: "/media/garage-before.jpg",
-      after: "/media/garage-after.jpg",
+      before: "/media/garage-cleanout-before.jpg",
+      after: "/media/garage-cleanout-after.jpg",
       service: "garage-cleanouts",
     },
     {
       title: "Estate Cleanout",
       location: "Lake Nona",
-      description: "A four-bedroom home emptied, with keepsakes set aside for the family.",
-      before: "/media/estate-before.jpg",
-      after: "/media/estate-after.jpg",
+      description: "A bedroom cleared of boxes, bags and clutter. The furniture the family kept stayed in place.",
+      before: "/media/bedroom-cleanout-before.jpg",
+      after: "/media/bedroom-cleanout-after.jpg",
       service: "estate-cleanouts",
     },
     {
       title: "Office Cleanout",
       location: "Downtown Orlando",
-      description: "Desks, chairs and e-waste removed before a new tenant moved in.",
-      before: "/media/office-before.jpg",
-      after: "/media/office-after.jpg",
+      description: "Boxes, old equipment and bagged clutter cleared from an open-plan office. Desks left ready to work.",
+      before: "/media/office-cleanout-before.jpg",
+      after: "/media/office-cleanout-after.jpg",
       service: "commercial-junk-removal",
     },
   ] as Project[],
