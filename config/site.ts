@@ -155,8 +155,8 @@ export const site = {
     headline: ["Junk gone today.", "Priced before we lift a thing."],
     subhead:
       "Tell us what needs to go, or text a photo. You get a firm price, an arrival window we keep, and a crew that leaves the place swept.",
-    image: "/media/crew-loading-sofa-driveway.jpg",
-    imageAlt: "Two crew members carrying an old sofa down a driveway to a junk removal truck",
+    image: "/media/crew-carrying-sofa-garage.jpg",
+    imageAlt: "Two crew members carrying an old sofa from a garage to a loaded junk removal truck",
   },
 
   /** Short trust points under the hero. Keep to things the business actually does. */

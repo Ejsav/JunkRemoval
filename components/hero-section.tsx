@@ -66,7 +66,7 @@ export function HeroSection() {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="float-in relative aspect-[4/3] sm:aspect-[5/4] lg:aspect-[4/5] rounded-[24px] overflow-hidden ring-1 ring-line-dark elevated-lg bg-slate" style={{ "--d": "120ms" } as React.CSSProperties}>
+            <div className="float-in relative aspect-[4/3] sm:aspect-[5/4] lg:aspect-square rounded-[24px] overflow-hidden ring-1 ring-line-dark elevated-lg bg-slate" style={{ "--d": "120ms" } as React.CSSProperties}>
               <HeroImage className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
               {isSampleContent && (
                 <span className="absolute left-4 bottom-4 eyebrow !text-[9.5px] text-bone/80 glass rounded-full px-2.5 py-1">Sample photo</span>
