@@ -54,7 +54,7 @@ export function BrandTryOn() {
               role="radio"
               aria-checked={on}
               onClick={() => pick(s.value)}
-              className={`group flex items-center gap-2.5 rounded-full border pl-1.5 pr-4 h-11 transition-colors duration-300 ${
+              className={`group flex items-center gap-2.5 rounded-full border pl-1.5 pr-4 h-11 transition-[border-color,background-color,transform] duration-200 active:scale-[0.97] ${
                 on ? "border-ink bg-paper" : "border-line hover:border-stone/50"
               }`}
             >
@@ -74,9 +74,9 @@ export function BrandTryOn() {
           <span className="text-[14px] font-medium">Your colour</span>
         </label>
       </div>
-      <div className="flex flex-wrap items-center gap-3 mt-8">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 mt-8">
         <Link href="/" className="btn btn-accent">
-          See the whole site in this colour
+          Browse the site in this colour
           <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
         </Link>
         <button type="button" onClick={() => pick(site.brand.accent)} className="btn btn-ghost">

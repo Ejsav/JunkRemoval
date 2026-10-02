@@ -8,26 +8,26 @@ export function Footer() {
   const { business, services, serviceAreas, builder } = site
   const socials = Object.entries(business.socials).filter(([, url]) => url)
   const heading = "text-[11px] eyebrow text-mist mb-5"
-  const link = "text-[14.5px] text-bone/70 hover:text-bone transition-colors"
+  const link = "inline-block py-0.5 text-[14.5px] text-bone/70 hover:text-bone transition-colors"
 
   return (
     <footer className="surface-dark grain relative overflow-hidden" data-section="footer">
-      <Container className="relative z-10 pt-20 sm:pt-28">
-        <div className="grid lg:grid-cols-12 gap-10 items-end pb-16 sm:pb-20 border-b border-line-dark">
-          <h2 className="lg:col-span-7 headline text-[clamp(2.5rem,5.5vw,5rem)] text-bone">
+      <Container className="relative z-10 pt-16 sm:pt-28">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-end pb-14 sm:pb-20 border-b border-line-dark">
+          <h2 className="lg:col-span-7 headline text-[clamp(2.25rem,9.5vw,3rem)] sm:text-[clamp(2.75rem,5.5vw,5rem)] text-bone">
             Point at it. <Em className="text-accent-soft block">We&apos;ll handle the rest.</Em>
           </h2>
-          <div className="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end gap-3">
-            <a href={phoneHref} className="btn btn-accent">
-              <Phone className="h-4 w-4" aria-hidden /> {business.phoneDisplay}
+          <div data-bar-hide className="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end gap-3">
+            <a href={phoneHref} data-cta="footer" className="btn btn-accent">
+              <Phone className="h-4 w-4" aria-hidden /> <span className="tabular-nums">{business.phoneDisplay}</span>
             </a>
-            <Link href={QUOTE_PATH} className="btn btn-ghost-dark">
+            <Link href={QUOTE_PATH} data-cta="footer" className="btn btn-ghost-dark">
               Free quote <ArrowRight className="btn-arrow h-4 w-4" aria-hidden />
             </Link>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-12 py-16">
+        <div className="grid grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 sm:gap-y-12 py-14 sm:py-16">
           <div className="col-span-2 lg:col-span-4">
             <Link href="/" aria-label={`${business.name} home`} className="inline-block">
               <Wordmark tone="dark" />
@@ -36,7 +36,7 @@ export function Footer() {
             <dl className="mt-8 grid gap-4 text-[14px]">
               <div>
                 <dt className="eyebrow !text-[10px] text-mist">Call</dt>
-                <dd><a href={phoneHref} className="text-bone font-mono text-[15px] hover:text-accent-soft transition-colors">{business.phoneDisplay}</a></dd>
+                <dd><a href={phoneHref} className="text-bone font-mono text-[15px] hover:text-accent-soft transition-colors whitespace-nowrap py-1 inline-block">{business.phoneDisplay}</a></dd>
               </div>
               {business.textEnabled && (
                 <div>
@@ -63,7 +63,7 @@ export function Footer() {
 
           <div className="lg:col-span-3">
             <p className={heading}>Services</p>
-            <ul className="grid gap-3">
+            <ul className="grid gap-2.5">
               {services.map((s) => (
                 <li key={s.slug}><Link href={`/services#${s.slug}`} className={link}>{s.title}</Link></li>
               ))}
@@ -72,7 +72,7 @@ export function Footer() {
 
           <div className="lg:col-span-3">
             <p className={heading}>Areas</p>
-            <ul className="grid gap-3">
+            <ul className="grid gap-2.5">
               {serviceAreas.cities.slice(0, 8).map((c) => (
                 <li key={c}><Link href="/service-areas" className={link}>{c}</Link></li>
               ))}
@@ -81,7 +81,7 @@ export function Footer() {
 
           <div className="col-span-2 lg:col-span-2">
             <p className={heading}>Company</p>
-            <ul className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+            <ul className="grid grid-cols-2 lg:grid-cols-1 gap-2.5">
               {[...navItems, { href: QUOTE_PATH, label: "Free Quote" }].map((l) => (
                 <li key={l.href}><Link href={l.href} className={link}>{l.label}</Link></li>
               ))}
@@ -101,7 +101,7 @@ export function Footer() {
         </p>
       </div>
 
-      <div className="relative z-10 border-t border-line-dark">
+      <div className="relative z-10 border-t border-line-dark" data-section="footer-base">
         <Container className="py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12.5px] text-mist">
           <p>
             © {new Date().getFullYear()} {business.name}
@@ -113,8 +113,8 @@ export function Footer() {
             )}
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="hover:text-bone transition-colors">Privacy</Link>
-            <Link href="/terms-of-service" className="hover:text-bone transition-colors">Terms</Link>
+            <Link href="/privacy-policy" className="hover:text-bone transition-colors py-1">Privacy</Link>
+            <Link href="/terms-of-service" className="hover:text-bone transition-colors py-1">Terms</Link>
           </div>
         </Container>
       </div>

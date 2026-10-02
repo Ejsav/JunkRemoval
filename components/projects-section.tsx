@@ -4,16 +4,16 @@ import { BeforeAfterShowcase } from "@/components/before-after-slider"
 
 export function ProjectsSection({ n }: { n?: string } = {}) {
   return (
-    <section data-section="projects" className="surface-dark grain relative overflow-hidden py-24 sm:py-32">
+    <section data-section="projects" className="surface-dark grain relative overflow-hidden py-20 sm:py-28 lg:py-32">
       <Container className="relative z-10">
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-end mb-12 lg:mb-16" data-reveal>
+        <div className="grid lg:grid-cols-12 gap-5 lg:gap-10 items-end mb-10 sm:mb-12 lg:mb-16" data-reveal>
           <div className="lg:col-span-8">
             <Eyebrow index={n} tone="dark">Before &amp; after</Eyebrow>
             <SectionTitle className="mt-6 text-bone">
               The difference, <Em className="text-accent-soft">in one visit.</Em>
             </SectionTitle>
           </div>
-          <p className="lg:col-span-4 text-mist lede">
+          <p className="lg:col-span-4 text-mist lede max-w-md">
             {isSampleContent ? "Sample project photos. At launch, these become your own jobs." : "Recent cleanouts from around the area."}
           </p>
         </div>

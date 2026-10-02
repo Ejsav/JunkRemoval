@@ -22,7 +22,7 @@ export default function TermsPage() {
         <p>Arrival windows are estimates. We will contact you if we are running late. Same-day service depends on availability.</p>
         <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-ink pt-6">Questions</h2>
         <p>
-          Call <a href={phoneHref} className="font-medium text-ink link-draw">{business.phoneDisplay}</a> with any questions about these terms.
+          Call <a href={phoneHref} className="font-medium text-ink link-draw whitespace-nowrap">{business.phoneDisplay}</a> with any questions about these terms.
         </p>
       </article>
     </>

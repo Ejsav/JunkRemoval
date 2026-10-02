@@ -17,7 +17,7 @@ function Stars({ rating, className = "" }: { rating: number; className?: string 
 function Byline({ r }: { r: Review }) {
   return (
     <span className="flex items-center gap-3">
-      <span className="h-9 w-9 rounded-full bg-sand text-ink flex items-center justify-center text-[13px] font-semibold" aria-hidden>
+      <span className="h-9 w-9 shrink-0 rounded-full bg-sand text-ink flex items-center justify-center text-[13px] font-semibold" aria-hidden>
         {r.name.charAt(0)}
       </span>
       <span>
@@ -34,9 +34,9 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
   const summary = site.business.reviewSummary
 
   return (
-    <section id="reviews" data-section="reviews" className="bg-bone py-24 sm:py-32">
+    <section id="reviews" data-section="reviews" className="bg-bone py-20 sm:py-28 lg:py-32">
       <Container>
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14" data-reveal>
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 lg:gap-6 mb-10 sm:mb-14" data-reveal>
           <div>
             <Eyebrow index={n}>Reviews</Eyebrow>
             <SectionTitle as={as} className="mt-6">
@@ -53,26 +53,27 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
               </a>
             ) : (
               isSampleContent && (
-                <p className="text-stone max-w-xs text-[14.5px]">
-                  <SampleBadge label="Sample reviews" /> <span className="block mt-2">Replaced with the client&apos;s real Google reviews at launch.</span>
+                <p className="text-stone max-w-xs text-[14px] leading-snug flex flex-col lg:items-end gap-2.5">
+                  <SampleBadge label="Sample reviews" />
+                  <span>Replaced with the client&apos;s real Google reviews at launch.</span>
                 </p>
               )
             )}
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-5">
-          <figure className={`lg:col-span-7 bg-ink text-bone rounded-[28px] p-8 sm:p-12 flex flex-col justify-between min-h-[22rem] relative overflow-hidden grain`} data-reveal>
+        <div className="grid lg:grid-cols-12 gap-4 sm:gap-5">
+          <figure className={`lg:col-span-7 bg-ink text-bone rounded-[24px] sm:rounded-[28px] p-7 sm:p-12 flex flex-col justify-between lg:min-h-[22rem] relative overflow-hidden grain`} data-reveal>
             <span className="absolute top-2 right-8 serif-em text-[11rem] leading-[0.8] text-bone/[0.06] select-none" aria-hidden>
               &ldquo;
             </span>
             <div className="relative z-10">
               <Stars rating={featured.rating} />
-              <blockquote className="serif-em text-[clamp(1.6rem,2.6vw,2.4rem)] leading-[1.18] mt-6 text-bone">{featured.text}</blockquote>
+              <blockquote className="serif-em text-[clamp(1.5rem,6.4vw,2.4rem)] lg:text-[clamp(1.6rem,2.6vw,2.4rem)] leading-[1.2] mt-5 sm:mt-6 text-bone text-pretty">{featured.text}</blockquote>
             </div>
-            <figcaption className="relative z-10 mt-10 flex items-center justify-between gap-4">
+            <figcaption className="relative z-10 mt-8 sm:mt-10 flex items-end justify-between gap-4">
               <span className="flex items-center gap-3">
-                <span className="h-9 w-9 rounded-full bg-bone/10 flex items-center justify-center text-[13px] font-semibold" aria-hidden>
+                <span className="h-9 w-9 shrink-0 rounded-full bg-bone/10 flex items-center justify-center text-[13px] font-semibold" aria-hidden>
                   {featured.name.charAt(0)}
                 </span>
                 <span>
@@ -84,20 +85,20 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
             </figcaption>
           </figure>
 
-          <div className={`grid gap-5 ${limit ? "lg:col-span-5" : "lg:col-span-5 lg:grid-rows-1"}`}>
+          <div className={`grid gap-4 sm:gap-5 ${limit ? "lg:col-span-5" : "lg:col-span-5 lg:grid-rows-1"}`}>
             {(limit ? rest : rest.slice(0, 1)).map((r, i) => (
               <figure
                 key={r.name + i}
                 data-reveal
                 style={{ "--d": `${(i + 1) * 80}ms` } as React.CSSProperties}
-                className="bg-paper rounded-[24px] p-7 border border-line elevated flex flex-col justify-between gap-6"
+                className="bg-paper rounded-[22px] sm:rounded-[24px] p-6 sm:p-7 border border-line elevated flex flex-col justify-between gap-6"
               >
                 <div>
                   <div className="flex items-center justify-between">
                     <Stars rating={r.rating} />
                     {isSampleContent && <SampleBadge />}
                   </div>
-                  <blockquote className="text-[15.5px] text-ink leading-relaxed mt-4">&ldquo;{r.text}&rdquo;</blockquote>
+                  <blockquote className="text-[15.5px] text-ink leading-relaxed mt-4 text-pretty">&ldquo;{r.text}&rdquo;</blockquote>
                 </div>
                 <figcaption>
                   <Byline r={r} />
@@ -108,20 +109,20 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
         </div>
 
         {!limit && rest.length > 1 && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-4 sm:mt-5">
             {rest.slice(1).map((r, i) => (
               <figure
                 key={r.name + i}
                 data-reveal
                 style={{ "--d": `${(i + 1) * 70}ms` } as React.CSSProperties}
-                className="bg-paper rounded-[24px] p-7 border border-line elevated flex flex-col justify-between gap-6"
+                className="bg-paper rounded-[22px] sm:rounded-[24px] p-6 sm:p-7 border border-line elevated flex flex-col justify-between gap-6"
               >
                 <div>
                   <div className="flex items-center justify-between">
                     <Stars rating={r.rating} />
                     {isSampleContent && <SampleBadge />}
                   </div>
-                  <blockquote className="text-[15.5px] text-ink leading-relaxed mt-4">&ldquo;{r.text}&rdquo;</blockquote>
+                  <blockquote className="text-[15.5px] text-ink leading-relaxed mt-4 text-pretty">&ldquo;{r.text}&rdquo;</blockquote>
                 </div>
                 <figcaption>
                   <Byline r={r} />
@@ -132,8 +133,8 @@ export function ReviewsSection({ limit, as = "h2", n }: { limit?: number; as?: "
         )}
 
         {limit && site.reviews.length > limit && (
-          <Link href="/reviews" className="inline-flex items-center gap-2 mt-10 text-[15px] font-medium text-ink link-draw">
-            Read all reviews <ArrowRight className="h-4 w-4" aria-hidden />
+          <Link href="/reviews" className="group inline-flex items-center gap-2 mt-8 sm:mt-10 py-2 text-[15px] font-medium text-ink link-draw">
+            Read all reviews <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden />
           </Link>
         )}
       </Container>
