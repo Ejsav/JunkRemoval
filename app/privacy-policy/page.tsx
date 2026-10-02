@@ -23,7 +23,7 @@ export default function PrivacyPage() {
         <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-ink pt-6">Your choices</h2>
         <p>
           To see, correct or delete information you have sent us, contact us at{" "}
-          <a href={phoneHref} className="font-medium text-ink link-draw">{business.phoneDisplay}</a>
+          <a href={phoneHref} className="font-medium text-ink link-draw whitespace-nowrap">{business.phoneDisplay}</a>
           {business.email && (
             <>
               {" "}or <a href={`mailto:${business.email}`} className="font-medium text-ink link-draw">{business.email}</a>

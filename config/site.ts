@@ -244,7 +244,7 @@ export const site = {
   ] as Project[],
 
   pricing: {
-    intro: "Priced by how much space your items take in the truck. Your quote is locked before we start.",
+    intro: "You pay for the space your items take in the truck. Lifting, loading and sweep-up are always included.",
     note: "Heavy materials, mattresses and some appliances can carry small disposal fees. We tell you upfront.",
     tiers: [
       { name: "Single item", volume: "1–2 items", price: "from $89", description: "A couch, a fridge, a mattress." },

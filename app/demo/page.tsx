@@ -99,7 +99,7 @@ export default function DemoPage() {
               Pick a colour and browse the site. Your logo, photos and reviews go in the same way.
             </p>
           </div>
-          <div className="lg:col-span-8" data-reveal>
+          <div className="lg:col-span-8 min-w-0" data-reveal>
             <BrandTryOn />
           </div>
         </Container>

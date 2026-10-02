@@ -42,14 +42,14 @@ export default function AboutPage() {
         </Container>
 
         <Container className="mt-20 sm:mt-24">
-          <div className="grid lg:grid-cols-12 gap-5">
-            <div className="lg:col-span-8 relative aspect-[16/10] rounded-[28px] overflow-hidden elevated-lg" data-reveal>
+          <div className="grid lg:grid-cols-12 gap-4 sm:gap-5">
+            <div className="lg:col-span-8 relative aspect-[16/10] rounded-[24px] sm:rounded-[28px] overflow-hidden elevated-lg bg-slate" data-reveal>
               <Image src={site.hero.image} alt={site.hero.imageAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" />
             </div>
-            <div className="lg:col-span-4 relative aspect-[16/10] lg:aspect-auto rounded-[28px] overflow-hidden elevated-lg" data-reveal>
+            <div className="lg:col-span-4 relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-auto rounded-[24px] sm:rounded-[28px] overflow-hidden elevated-lg bg-slate" data-reveal>
               <Image src={images.recycling} alt={images.recyclingAlt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 33vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" aria-hidden />
-              <p className="absolute left-6 right-6 bottom-6 text-bone text-[15px] leading-snug">
+              <p className="absolute left-5 right-5 bottom-5 sm:left-6 sm:right-6 sm:bottom-6 text-bone text-[15px] leading-snug text-pretty">
                 Usable items are donated, recyclables recycled. The landfill is the last stop, not the first.
               </p>
             </div>
@@ -57,14 +57,14 @@ export default function AboutPage() {
         </Container>
 
         <Container className="mt-20">
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-4 border-t border-line">
+          <ul className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 lg:gap-x-0 border-t border-line">
             {promises.map((p, i) => {
               const Icon = icons[p.icon]
               return (
-                <li key={p.title} data-reveal className={`py-8 sm:pr-6 border-b border-line lg:border-b-0 ${i > 0 ? "lg:pl-6 lg:border-l" : ""}`}>
+                <li key={p.title} data-reveal className={`py-6 sm:py-8 lg:pr-6 border-b border-line lg:border-b-0 ${i > 0 ? "lg:pl-6 lg:border-l" : ""}`}>
                   <Icon className="h-5 w-5 text-accent" aria-hidden />
-                  <p className="text-[18px] font-semibold tracking-[-0.02em] mt-5">{p.title}</p>
-                  <p className="text-[14.5px] text-stone mt-1.5">{p.text}</p>
+                  <p className="text-[16px] sm:text-[18px] leading-tight font-semibold tracking-[-0.02em] mt-4 sm:mt-5">{p.title}</p>
+                  <p className="text-[14px] sm:text-[14.5px] text-stone mt-1.5 leading-snug">{p.text}</p>
                 </li>
               )
             })}

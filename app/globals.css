@@ -100,7 +100,21 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 88px;
     -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  a,
+  button,
+  label,
+  summary,
+  [role="slider"] {
+    touch-action: manipulation;
+  }
+  input,
+  select,
+  textarea {
+    scroll-margin-block: 120px;
   }
   body {
     @apply bg-background text-foreground;
@@ -213,21 +227,32 @@
   font-size: 15px;
   letter-spacing: -0.01em;
   white-space: nowrap;
+  user-select: none;
   transition:
-    background-color 0.25s var(--ease-out),
-    color 0.25s var(--ease-out),
-    border-color 0.25s var(--ease-out),
-    transform 0.25s var(--ease-out),
-    box-shadow 0.25s var(--ease-out);
+    background-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out),
+    opacity 0.2s var(--ease-out);
 }
-.btn:active {
-  transform: scale(0.98);
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+  transition-duration: 0.08s;
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 .btn .btn-arrow {
-  transition: transform 0.3s var(--ease-out);
+  transition: transform 0.25s var(--ease-out);
 }
-.btn:hover .btn-arrow {
-  transform: translateX(3px);
+@media (hover: hover) {
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
 }
 .btn-accent {
   background: var(--accent);
@@ -236,47 +261,57 @@
     0 1px 0 rgb(255 255 255 / 0.18) inset,
     0 8px 24px -10px color-mix(in oklab, var(--accent) 80%, transparent);
 }
-.btn-accent:hover {
-  background: color-mix(in oklab, var(--accent) 88%, black);
+@media (hover: hover) {
+  .btn-accent:hover:not(:disabled) {
+    background: color-mix(in oklab, var(--accent) 88%, black);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.18) inset,
+      0 12px 28px -10px color-mix(in oklab, var(--accent) 90%, transparent);
+  }
+  .btn-ink:hover:not(:disabled) {
+    background: var(--slate);
+  }
+  .btn-bone:hover:not(:disabled) {
+    background: #fff;
+  }
+  .btn-ghost-dark:hover:not(:disabled) {
+    border-color: rgb(255 255 255 / 0.4);
+    background: rgb(255 255 255 / 0.05);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    border-color: var(--ink);
+  }
 }
 .btn-ink {
   background: var(--ink);
   color: var(--bone);
 }
-.btn-ink:hover {
-  background: var(--slate);
-}
 .btn-bone {
   background: var(--bone);
   color: var(--ink);
 }
-.btn-bone:hover {
-  background: #fff;
-}
 .btn-ghost-dark {
   border: 1px solid rgb(255 255 255 / 0.18);
   color: var(--bone);
-}
-.btn-ghost-dark:hover {
-  border-color: rgb(255 255 255 / 0.4);
-  background: rgb(255 255 255 / 0.05);
 }
 .btn-ghost {
   border: 1px solid var(--line);
   color: var(--ink);
   background: var(--paper);
 }
-.btn-ghost:hover {
-  border-color: var(--ink);
-}
 
 .link-draw {
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
   transition: background-size 0.35s var(--ease-out);
 }
-.link-draw:hover,
-.link-draw[aria-current="page"] {
+.link-draw[aria-current="page"],
+.link-draw:focus-visible {
   background-size: 100% 1px;
+}
+@media (hover: hover) {
+  .link-draw:hover {
+    background-size: 100% 1px;
+  }
 }
 
 .select-chevron {
@@ -287,17 +322,65 @@
   padding-right: 2.75rem;
 }
 
+/* Sticky mobile action bar: slides away when it would cover a CTA, the form, or the keyboard. */
+[data-section="mobile-bar"] {
+  transition:
+    transform 0.35s var(--ease-out),
+    opacity 0.25s var(--ease-out);
+}
+[data-section="mobile-bar"][data-hidden="true"],
 body[data-menu="open"] [data-section="mobile-bar"] {
+  transform: translate3d(0, calc(100% + 12px), 0);
+  opacity: 0;
+  pointer-events: none;
+}
+/* Keep the footer's last line clear of the bar on phones. */
+@media (max-width: 1023px) {
+  body:has([data-section="mobile-bar"]) [data-section="footer-base"] {
+    padding-bottom: calc(78px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Accordion: animates height via grid rows, so opening never jumps the page. */
+/* Pair with the `grid` utility (kept out of here so `hidden lg:grid` etc. still work). */
+.disclose {
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.38s var(--ease-out);
+}
+.disclose > * {
+  overflow: hidden;
+  min-height: 0;
+}
+.disclose[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.disclose > * > * {
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+  transition:
+    opacity 0.25s var(--ease-out),
+    transform 0.38s var(--ease-out);
+}
+.disclose[data-open="true"] > * > * {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.06s;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
 /* ─── Motion ───────────────────────────────────────────── */
 html.js [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 22px, 0);
+  transform: translate3d(0, 16px, 0);
   transition:
-    opacity 0.9s var(--ease-out),
-    transform 0.9s var(--ease-out);
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
   transition-delay: var(--d, 0ms);
 }
 html.js [data-reveal].is-in {
@@ -305,18 +388,34 @@ html.js [data-reveal].is-in {
   transform: none;
 }
 @keyframes rise {
-  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
   to { opacity: 1; transform: none; }
 }
 @keyframes float-in {
   from { opacity: 0; transform: translate3d(0, 16px, 0) scale(0.98); }
   to { opacity: 1; transform: none; }
 }
-.rise { animation: rise 1s var(--ease-out) both; animation-delay: var(--d, 0ms); }
-.float-in { animation: float-in 1.1s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+.rise { animation: rise 0.8s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+.float-in { animation: float-in 0.9s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.fade { animation: fade 0.45s var(--ease-out) both; }
+@keyframes pop {
+  0% { opacity: 0; transform: scale(0.6); }
+  60% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: none; }
+}
+.pop { animation: pop 0.5s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+@keyframes shake {
+  0%, 100% { transform: none; }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.shake { animation: shake 0.3s ease-in-out; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   html.js [data-reveal] { opacity: 1; transform: none; transition: none; }
-  .rise, .float-in { animation: none; }
+  .rise, .float-in, .fade, .pop, .shake { animation: none; }
+  .disclose, .disclose > * > *, [data-section="mobile-bar"] { transition: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
 }

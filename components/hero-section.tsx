@@ -16,10 +16,10 @@ export function HeroSection() {
       <div className="absolute inset-0 hairline-grid pointer-events-none" aria-hidden />
       <div className="absolute -top-40 right-[-10%] h-[640px] w-[640px] rounded-full bg-accent/10 blur-[140px] pointer-events-none" aria-hidden />
 
-      <Container className="relative z-10 pt-12 sm:pt-16 lg:pt-20 pb-10 lg:pb-14">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+      <Container className="relative z-10 pt-10 sm:pt-16 lg:pt-20 pb-16 sm:pb-12 lg:pb-14">
+        <div className="grid lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-10 items-center">
           <div className="lg:col-span-7 min-w-0">
-            <p className="rise eyebrow text-mist flex items-center gap-2.5 mb-7">
+            <p className="rise eyebrow text-mist flex items-center gap-2.5 mb-6 sm:mb-7">
               <span className="relative flex h-2 w-2" aria-hidden>
                 <span className="absolute inset-0 rounded-full bg-[#7fb58f] animate-ping opacity-60" />
                 <span className="relative h-2 w-2 rounded-full bg-[#7fb58f]" />
@@ -29,18 +29,18 @@ export function HeroSection() {
             </p>
 
             <h1 className="rise text-bone" style={{ "--d": "60ms" } as React.CSSProperties}>
-              <span className="display block text-[clamp(3.1rem,8.2vw,7.25rem)]">{hero.headline[0]}</span>
-              <span className="serif-em block text-[clamp(2.1rem,5.2vw,4.6rem)] leading-[1.02] text-accent-soft mt-2 [text-wrap:balance]">{hero.headline[1]}</span>
+              <span className="display block text-[clamp(2.85rem,13vw,4rem)] sm:text-[clamp(4rem,8.2vw,7.25rem)]">{hero.headline[0]}</span>
+              <span className="serif-em block text-[clamp(1.75rem,8vw,2.5rem)] sm:text-[clamp(2.5rem,5.2vw,4.6rem)] leading-[1.04] text-accent-soft mt-2 [text-wrap:balance]">{hero.headline[1]}</span>
             </h1>
 
-            <p className="rise lede text-mist max-w-[33rem] mt-7" style={{ "--d": "140ms" } as React.CSSProperties}>
+            <p className="rise lede text-mist max-w-[33rem] mt-5 sm:mt-7" style={{ "--d": "140ms" } as React.CSSProperties}>
               {hero.subhead}
             </p>
 
-            <div className="rise flex flex-col sm:flex-row gap-3 mt-9" style={{ "--d": "220ms" } as React.CSSProperties}>
+            <div data-bar-hide className="rise flex flex-col sm:flex-row gap-3 mt-8 sm:mt-9" style={{ "--d": "220ms" } as React.CSSProperties}>
               <a href={phoneHref} data-cta="hero" className="btn btn-accent !h-14 !px-7 !text-[16px]">
                 <Phone className="h-[18px] w-[18px]" aria-hidden />
-                Call {business.phoneDisplay}
+                <span className="tabular-nums">Call {business.phoneDisplay}</span>
               </a>
               <Link href={QUOTE_PATH} data-cta="hero" className="btn btn-ghost-dark !h-14 !px-7 !text-[16px]">
                 Get a free quote
@@ -48,7 +48,7 @@ export function HeroSection() {
               </Link>
             </div>
 
-            <div className="rise flex flex-wrap items-center gap-x-6 gap-y-3 mt-6 text-[14px]" style={{ "--d": "280ms" } as React.CSSProperties}>
+            <div className="rise flex flex-wrap items-center gap-x-6 gap-y-3 mt-5 sm:mt-6 text-[14px]" style={{ "--d": "280ms" } as React.CSSProperties}>
               {business.textEnabled && (
                 <a href={smsHref} data-cta="hero" className="inline-flex items-center gap-2 text-bone/80 hover:text-bone link-draw">
                   <MessageSquare className="h-4 w-4 text-accent-soft" aria-hidden />
@@ -66,26 +66,39 @@ export function HeroSection() {
                 </a>
               )}
             </div>
+
+            {/* Phone-only trust row: the promise strip lives below the fold on small screens. */}
+            <ul className="rise sm:hidden grid grid-cols-2 gap-x-4 gap-y-2.5 mt-7 pt-6 border-t border-line-dark" style={{ "--d": "320ms" } as React.CSSProperties}>
+              {promises.map((p) => {
+                const Icon = icons[p.icon]
+                return (
+                  <li key={p.title} className="flex items-center gap-2 text-[13.5px] text-bone/85 min-w-0">
+                    <Icon className="h-4 w-4 text-accent-soft shrink-0" aria-hidden />
+                    <span className="truncate">{p.title}</span>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
 
           {/* Editorial image stack */}
           <div className="lg:col-span-5 relative">
-            <div className="float-in relative aspect-[4/3] sm:aspect-[5/4] lg:aspect-[4/5] rounded-[28px] overflow-hidden ring-1 ring-line-dark elevated-lg" style={{ "--d": "120ms" } as React.CSSProperties}>
-              <Image src={hero.image} alt={hero.imageAlt} fill priority className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
+            <div className="float-in relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] rounded-[24px] lg:rounded-[28px] overflow-hidden ring-1 ring-line-dark elevated-lg bg-slate" style={{ "--d": "120ms" } as React.CSSProperties}>
+              <Image src={hero.image} alt={hero.imageAlt} fill priority className="object-cover object-[50%_60%]" sizes="(max-width: 1024px) 100vw, 40vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/10" aria-hidden />
-              <p className="hidden lg:block absolute left-5 bottom-5 eyebrow text-bone/80">Driveway pickup · {business.address.city}</p>
+              <p className="hidden lg:block absolute right-5 bottom-5 eyebrow text-bone/80">Driveway pickup · {business.address.city}</p>
             </div>
 
             <div
-              className="float-in glass rounded-[20px] p-4 w-[15.5rem] sm:w-[17rem] absolute -bottom-6 right-3 sm:right-6 lg:-left-16 lg:right-auto lg:bottom-14 shadow-[0_24px_60px_-20px_rgb(0_0_0/0.6)]"
+              className="float-in glass rounded-[18px] p-3.5 sm:p-4 w-[12.5rem] sm:w-[17rem] absolute -bottom-7 right-4 sm:right-6 lg:-left-16 lg:right-auto lg:bottom-14 shadow-[0_24px_60px_-20px_rgb(0_0_0/0.6)]"
               style={{ "--d": "420ms" } as React.CSSProperties}
               aria-hidden
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-2.5 sm:mb-3">
                 <span className="eyebrow !text-[9.5px] text-mist">Photo estimate</span>
                 {isSampleContent && <span className="eyebrow !text-[9px] text-mist/70">Example</span>}
               </div>
-              <div className="flex gap-1.5 mb-3.5">
+              <div className="hidden sm:flex gap-1.5 mb-3.5">
                 {projects.slice(0, 3).map((p) => (
                   <span key={p.before} className="relative h-11 flex-1 rounded-lg overflow-hidden ring-1 ring-line-dark">
                     <Image src={p.before} alt="" fill className="object-cover" sizes="80px" />
@@ -97,9 +110,9 @@ export function HeroSection() {
                   <span className="block text-[13px] text-bone font-medium">{featuredTier.name}</span>
                   <span className="block text-[11px] text-mist">{featuredTier.volume}</span>
                 </span>
-                <span className="text-[20px] font-semibold tracking-tight text-bone">{featuredTier.price.replace("from ", "")}</span>
+                <span className="text-[18px] sm:text-[20px] font-semibold tracking-tight text-bone tabular-nums">{featuredTier.price.replace("from ", "")}</span>
               </div>
-              <div className="mt-3 h-1.5 rounded-full bg-bone/10 overflow-hidden">
+              <div className="mt-2.5 sm:mt-3 h-1.5 rounded-full bg-bone/10 overflow-hidden">
                 <span className="block h-full w-1/2 rounded-full bg-accent-soft" />
               </div>
             </div>
@@ -107,7 +120,7 @@ export function HeroSection() {
         </div>
 
         {/* Promise strip */}
-        <ul className="grid grid-cols-2 lg:grid-cols-4 mt-16 lg:mt-20 border-t border-line-dark">
+        <ul className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-y-6 mt-16 lg:mt-20 border-t border-line-dark">
           {promises.map((p, i) => {
             const Icon = icons[p.icon]
             return (
